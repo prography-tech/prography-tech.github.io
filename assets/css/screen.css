@@ -824,7 +824,9 @@ body.post-template #cover {
 body.page-template #cover {
     background-image: url("https://images.unsplash.com/photo-1511772004623-f90ac3c3b0fe?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1266&q=80");
 }
-
+body.author-template #cover {
+    background-image: "https://images.unsplash.com/photo-1533090161767-e6ffed986c88?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1350&q=80"
+}
 body.author-list-template #cover {
     background-image: url("https://images.unsplash.com/photo-1461902588240-90a09850543d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=668&q=80");
 }
