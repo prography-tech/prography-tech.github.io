@@ -2,10 +2,10 @@ title:  Prography
 email: contact@prography.org
 description: 세상에 필요한 IT 서비스를 만드는 허브 <b>프로그라피</b> 기술블로그 입니다 :) 
 baseurl: ''
-url: 'http://prography-develop.github.io'
+url: 'https://prography-tech.github.io/'
 timezone: Asia/Seoul 
 
-repository: soomtopia/soomtopia.github.io
+repository: prography-tech/prography-tech.github.io
 
 permalink: /:year/:month/:day/:title/
 
@@ -47,8 +47,7 @@ exclude: [README.md, Gemfile, Gemfile.lock]
 
 keep_files: [assets, files]
 github: [metadata]
-# iolo's custom
-author: soomtopia@gmail.com
+author: contact@prography.org
 image: 'assets/images/home.jpg'
 asset_url: /assets
 
