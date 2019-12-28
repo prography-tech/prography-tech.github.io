@@ -1,0 +1,25 @@
+---
+layout: default
+---
+<div id="cover" class="container-fluid"
+     {% if page.image %}style="background-image: url({{ page.image }});"{% endif %}>
+    <div>
+        <h1>{{ page.title }}</h1>
+        <p>{{ page.description | newline_to_br }}</p>
+    </div>
+</div>
+
+<div id="content" class="container">
+    <div id="post-content" class="post page" role="main">
+        {% for author in site.authors %}
+        <div id="cover-white" class="container">
+            <div>
+                <div id="cover-author-image"
+                        {% if author.image %}style="background-image:url({{ author.image }});"{% endif %}>
+                </div>
+                <h2><a href="{{site.base_url}}/authors/{{ author.name }}" style="text-decoration: none;"> {{ author.name }} &nbsp; &nbsp; &nbsp; &nbsp;<em style="font-size: 18px; font-weight: 200;">{{author.intro}}</em></a></h2> 
+            </div>
+        </div>
+        {% endfor %}   
+    </div>
+</div>

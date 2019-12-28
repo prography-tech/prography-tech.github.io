@@ -1,0 +1,65 @@
+title:  Prography
+email: contact@prography.org
+description: 세상에 필요한 IT 서비스를 만드는 허브 <b>프로그라피</b> 기술블로그 입니다 :) 
+baseurl: ''
+url: 'http://prography-develop.github.io'
+timezone: Asia/Seoul 
+
+repository: soomtopia/soomtopia.github.io
+
+permalink: /:year/:month/:day/:title/
+
+excerpt_separator: <!--more-->
+
+markdown: kramdown
+
+
+kramdown:
+  input: GFM
+
+plugins:
+  - jekyll-paginate
+
+paginate: 5
+paginate_path: '/page/:num/'
+
+collections:
+  authors:
+    output: true
+    permalink: /authors/:path/
+  tags:
+    output: true
+    permalink: /tags/:path/
+
+defaults:
+  - scope:
+      path: ''
+      type: authors
+    values:
+      layout: author
+  - scope:
+      path: ''
+      type: tags
+    values:
+      layout: tag
+
+exclude: [README.md, Gemfile, Gemfile.lock]
+
+keep_files: [assets, files]
+github: [metadata]
+# iolo's custom
+author: soomtopia@gmail.com
+image: 'assets/images/home.jpg'
+asset_url: /assets
+
+github_url:
+  username: prography-develop
+
+google_analytics:
+  ua: 'UA-154989361-1'
+
+google_fonts:
+  - name: "Source Sans Pro"
+    weights: "400,400i,700,700i"
+  - name: "Lora"
+    weights: "400,400i,700,700i"
