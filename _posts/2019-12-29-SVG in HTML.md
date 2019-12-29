@@ -4,7 +4,7 @@ title: "SVG 활용: HTML상에 벡터 이미지 삽입하기"
 author: bluestragglr
 date: 2019-11-11 00:00
 tags: [svg, HTML/CSS]
-image: 'https://kakao.github.io/files/career2020.jpg'
+image: 'https://dab1nmslvvntp.cloudfront.net/wp-content/uploads/2017/12/1498798784svg101.svg'
 ---
 
 
