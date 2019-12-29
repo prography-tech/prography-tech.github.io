@@ -1,4 +1,5 @@
 ---
-name: algorithm
-title: 'algorithm'
+name: alrogithm
+title: 'alrogithm'
+image: ''
 ---
