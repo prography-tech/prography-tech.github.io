@@ -2,9 +2,9 @@
 
 프로그라피 기술 블로그입니다. 
 
-- jekyll 로 만들어져있습니다. 작성 후 PR 을 날려주세용
-- PR 전 로컬에서 확인하고 싶은경우 jekyll을 깔아주세요
+- 이 블로그는 Jekyll은 로 만들어져있습니다. 아래 사이트를 확인해 주세요
     https://jekyllrb-ko.github.io/docs/installation/
+- 위 내용을 숙지 후 작업해주세요! 
 
 ## Getting Started
 
@@ -31,13 +31,15 @@
    upstream	git@github.com:prography-tech/prography-tech.github.io.git(push)
    ```
 
-   git fetch
-
+   원격저장소와 동기화 
+   
    ```
    $ git fetch upstream
    $ git checkout master
+   $ git merge upstream/master
    ```
 
+    이후 자신의 로컬에 add > commit > push 후 원격 master에 pull request 를 보내주세요! 
 
 
 ### 글 등록
