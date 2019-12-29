@@ -2,6 +2,10 @@
 
 프로그라피 기술 블로그입니다. 
 
+- jekyll 로 만들어져있습니다. 작성 후 PR 을 날려주세용
+- PR 전 로컬에서 확인하고 싶은경우 jekyll을 깔아주세요
+    https://jekyllrb-ko.github.io/docs/installation/
+
 ## Getting Started
 
 ### 기본 설정 
