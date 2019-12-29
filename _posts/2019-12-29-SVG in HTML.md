@@ -3,7 +3,7 @@ layout: post
 title: "SVG 활용: HTML상에 벡터 이미지 삽입하기"
 author: bluestragglr
 date: 2019-11-11 00:00
-tags: [algorithm, kakao]
+tags: [svg, HTML/CSS]
 image: 'https://kakao.github.io/files/career2020.jpg'
 ---
 
