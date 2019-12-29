@@ -1,7 +1,8 @@
-## tech-prography 
-주의: GitHub Pages와 Jekyll에 대해서 충분히 숙지할 것. 주의: Collaborating on projects using issues and pull requests을 정독.
+# 프로그라피 기술 블로그
 
+프로그라피 기술 블로그입니다. 
 
+## Getting Started
 
 ### 기본 설정 
 
