@@ -232,6 +232,7 @@ for small screen(<720px):
     border-bottom: 1px solid #e91e63;
     color: #e91e63;
     font-weight: 400;
+    letter-spacing: -0.15px;
 }
 
 #menu > li.active > a,
@@ -676,6 +677,7 @@ for small screen(<720px):
     height: 60px;
     margin: 0 auto;
     border-radius: 100%;
+    border: 1px solid #e9e9e9;
     background: url(../images/pc/default_pic_s.png) no-repeat center;
     background-size: cover;
 }
