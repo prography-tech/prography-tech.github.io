@@ -94,7 +94,7 @@ SVG파일을 직접 작성하기 위해서는 벡터 패스의 좌표값들과 �
 
    이후 위 코드를 띄워 보면, 아래와 같은 결과를 얻을 수 있습니다.  화살표의 삼각형 부분과, 오른쪽에 있는 흰색 사각형에 마우스를hover하였을 때 자연스럽게 색상이 변하는 것을 확인할 수 있습니다. 
 
-   ![svg-hover](../assets/images/svg-hover.gif)
+   ![svg-hover](/assets/images/svg-hover.gif)
 
    
 
