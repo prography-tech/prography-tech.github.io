@@ -87,8 +87,9 @@
    ---
    name: soomtopia
    title: 한수민 # 이름 또는 닉네임등록 
-   image: https://avatars2.githubusercontent.com/u/50104236?s=460&v=4
-   intro: django
+   image: https://avatars2.githubusercontent.com/u/50104236?s=460&v=4 # 프로필사진
+   cover: # 배경사진
+   intro: django # author list 에 django developer 로 명시됨
    ---
    # 자기 소개를 적으면 된다 
    ```

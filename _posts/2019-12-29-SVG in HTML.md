@@ -3,7 +3,7 @@ layout: post
 title: "SVG 활용: HTML상에 벡터 이미지 삽입하기"
 author: bluestragglr
 date: 2019-12-29 18:42
-tags: [svg, HTML/CSS]
+tags: [svg, html, css]
 image: 'https://dab1nmslvvntp.cloudfront.net/wp-content/uploads/2017/12/1498798784svg101.svg'
 ---
 
