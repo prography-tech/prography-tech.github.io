@@ -17,7 +17,7 @@
 
    ```bash
    $ git clone https://github.com/soomtopia/prography-tech.github.io.git
-   $ cd kakao.github.io
+   $ cd prography-tech.github.io.git
    $ git remote add upstream git@github.com:prography-tech/prography-tech.github.io.git # 원격 저장소 등록
    ```
 
@@ -71,6 +71,7 @@
     - 이미지의 경우 주소 url 을 붙히면 좋다
     - 로컬에 있는 이미지를 올리고 싶은 경우 assets/images 폴더에 넣자
     -  `assets/images/<photo-name>.jpg` 와 같이 등록한다. 
+    -  마크다운 파일 안에서 상대경로로 불러오는 경우 올바르게 빌드되지 않는다! 마크다운 파일 안에도 `[image](assets/images/<photo-name>.jpg)` 와 같이 작성한다. 
 
     - __작성자와 태그가 authors , tags 에 등록되지 않았다면 등록 해주어야한다.__
 
@@ -106,7 +107,7 @@
    안녕하세요. 저는 갓성환입니다. 요리 코딩 겅부 포켓몬 다 잘하죠 훗 
    
    ####  github
-   http://github.com/sin
+   http://github.com/blueStragglr
    
    #### 주요언어 
    vue.js / html / css / javascript
