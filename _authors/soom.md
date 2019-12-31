@@ -1,7 +1,7 @@
 ---
 name: soom
 title: 한수민
-image: /assets/images/author/soomin/profile2.jpg
+image: /assets/images/author/soomin/profile.jpg
 intro: django developer
 cover: /assets/images/author/soomin/background.jpg
 ---
