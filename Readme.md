@@ -1,4 +1,4 @@
-# 프로그라피 기술 블로그
+# 	프로그라피 기술 블로그
 
 프로그라피 기술 블로그입니다. 
 
@@ -8,7 +8,7 @@
 
 ## Getting Started
 
-### 기본 설정 
+### 깃허브 설정 
 
 
 1. https://github.com/prography-tech/prography-tech.github.io 포크 하기
@@ -40,6 +40,22 @@
    ```
 
     이후 자신의 로컬에 add > commit > push 후 원격 master에 pull request 를 보내주세요! 
+   
+   
+
+### 로컬에서 빌드하기
+
+​	jekyll 관련 프로젝트를 완전히 처음 시작하는 경우, 아래의 단계를 거치면 성공적으로 로컬 환경에서 프로젝트를 빌드하고 테스	트 해 볼수 있습니다. 좀 더 자세한 매뉴얼은 https://jekyllrb-ko.github.io/docs/installation/ 를 참고하세요.
+
+1. Ruby 설치하기 
+   https://www.ruby-lang.org/en/downloads/ 를 참고하여 ruby를 설치 해 주세요. Mac OSX에는 보통 Ruby가 설치되어 있습니다. 설치 후 터미널 등에서 `$ ruby -v` 를 실행하여 Ruby가 정상적으로 설치되었는지 확인 해 주세요.
+2. RubyGems 설치하기
+   https://rubygems.org/pages/download 를 참고하여 RubyGems 또한 설치 해 주세요. Mac OSX에는 RubyGems 또한 설치되어 있는 경우가 많습니다. 설치 후 터미널 등에서 `$ gem -v` 를 실행하여 RubyGems가 정상적으로 설치되었는지 확인 해 주세요. 
+3. Bundle 설치하기
+   이제 사용하는 command line 도구(i.e. terminal)에서 프로젝트 폴더로 이동 해 주세요. 프로젝트 폴더의 최상위 경로에서 `$ bundle install` 을 실행하여 필요한 bundle들을 설치 해 줍니다. 해당 과정은 시간이 다소 소요됩니다!
+4. 로컬 환경에서 실행하기
+   이제 command line 도구에서 `$ jekyll serve` 를 실행하면 로컬 환경에서 빌드된 블로그를 확인할 수 있ㅅ브니다. 
+
 
 
 ### 글 등록
@@ -66,16 +82,16 @@
     ---
     # 이 아래에 마크다운 형식의 포스트를 작성하세요요요
     ```
-
-
-    - 이미지의 경우 주소 url 을 붙히면 좋다
-    - 로컬에 있는 이미지를 올리고 싶은 경우 assets/images 폴더에 넣자
-    -  `assets/images/<photo-name>.jpg` 와 같이 등록한다. 
-    -  마크다운 파일 안에서 상대경로로 불러오는 경우 올바르게 빌드되지 않는다! 마크다운 파일 안에도 `[image](assets/images/<photo-name>.jpg)` 와 같이 작성한다. 
-
-    - __작성자와 태그가 authors , tags 에 등록되지 않았다면 등록 해주어야한다.__
-
-
+    
+    
+        - 이미지의 경우 주소 url 을 붙히면 좋다
+        - 로컬에 있는 이미지를 올리고 싶은 경우 assets/images 폴더에 넣자
+        -  `assets/images/<photo-name>.jpg` 와 같이 등록한다. 
+        -  마크다운 파일 안에서 상대경로로 불러오는 경우 올바르게 빌드되지 않는다! 마크다운 파일 안에도 `[image](assets/images/<photo-name>.jpg)` 와 같이 작성한다. 
+        
+        - __작성자와 태그가 authors , tags 에 등록되지 않았다면 등록 해주어야한다.__
+    
+    
 
 ### 작성자 등록하기
 
