@@ -1,5 +1,14 @@
 /* common */
 
+:root{
+    --default-text-color: #333333;
+    --prography-color: #e91e63;
+}
+
+@font-face {
+
+}
+
 * {
     -webkit-box-sizing: border-box;
     box-sizing: border-box;
@@ -8,7 +17,7 @@
 body {
     font-family: sans-serif;
     font-weight: 300; /* @@iolo 200 -> 300, 200 for retina only! */
-    color: #505050;
+    color: var(--default-text-color);
     background-color: #fff;
 }
 
@@ -27,8 +36,10 @@ pre,
 code,
 tt,
 kbd {
-    font-family: monospace;
+    /*font-family: monospace;*/
     font-weight: 300;
+    font-family: "Source Code Pro", monospace;
+
 }
 
 code.highlighter-rouge {
@@ -46,7 +57,7 @@ b, strong, optgroup {
 }
 
 a, a:link, a:visited, a:active, a:hover {
-    color: #505050;
+    color: var(--default-text-color);
     text-decoration: none;
 }
 
@@ -218,7 +229,7 @@ for small screen(<720px):
     top: 1px;
     margin: 0;
     border-bottom: 1px solid #e6e6e6;
-    color: #505050;
+    color: var(--default-text-color);
     font-size: 15px;
     line-height: 59px; /* 59px = 60(height) - 1(border) */
 }
@@ -229,15 +240,15 @@ for small screen(<720px):
 
 #menu > li.active,
 #menu > li:hover {
-    border-bottom: 1px solid #e91e63;
-    color: #e91e63;
+    border-bottom: 1px solid var(--prography-color);
+    color: var(--prography-color);
     font-weight: 400;
     letter-spacing: -0.15px;
 }
 
 #menu > li.active > a,
 #menu > li:hover > a {
-    color: #e91e63;
+    color: var(--prography-color);
 }
 
 #search {
@@ -259,7 +270,7 @@ for small screen(<720px):
     border: 1px solid #e6e6e6;
     padding: 0 30px 0 15px; /* 30px(right-padding) = 15(right-padding) + 10(icon-width) + 5(@@iolo) */
     font-size: 14px;
-    color: #505050;
+    color: var(--default-text-color);
     background: url(../images/pc/icon_search.png) no-repeat right;
     background-size: 13px 13px;
     background-position-x: 135px; /* 135px = 160 - 15(right-padding) + 10(icon-width) */
@@ -336,7 +347,7 @@ for small screen(<720px):
     padding: 20px 30px;
     border-top: 1px solid #d4d4d4;
     background: #fff;
-    color: #505050;
+    color: var(--default-text-color);
     font-size: 11px;
 }
 
@@ -502,7 +513,7 @@ for small screen(<720px):
     width: 80%; /* @@iolo */
     max-width: 780px;
     margin: 0 auto;
-    color: #505050;
+    color: var(--default-text-color);
     text-overflow: ellipsis;
     white-space: nowrap;
     overflow: hidden;
@@ -527,7 +538,7 @@ for small screen(<720px):
 #cover-white a:visited,
 #cover-white a:active,
 #cover-white a:hover {
-    color: #505050;
+    color: var(--default-text-color);
 }
 
 #cover-white video {
@@ -548,7 +559,7 @@ for small screen(<720px):
     bottom: 1em;
     right: 1em;
     font-size: 60%;
-    color: #505050;
+    color: var(--default-text-color);
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
@@ -970,7 +981,7 @@ body.tag-template #navbar {
 #post-content blockquote {
     margin: 28px 0;
     padding: 28px;
-    border-left: 3px solid #e91e63;
+    border-left: 3px solid var(--prography-color);
 }
 
 #post-content blockquote > *:first-child {
@@ -979,8 +990,8 @@ body.tag-template #navbar {
 
 #post-content pre {
     margin: 28px 0;
-    /*background: #f4f4f4;*/
-    border: 1px solid #d4d4d4;
+    background: #fafafa;
+    /*border: 1px solid #d4d4d4;*/
     width: 100%;
     padding: 10px;
     font-size: 0.9em;
@@ -1184,6 +1195,8 @@ body.author-template #cover p {
     width: 144px;
     height: 144px;
     border-radius: 100%;
+    /*border: 1px solid #e9e9e9;*/
+    box-shadow: 1px 1px 2px 2px rgba(0,0,0,0.03);
     background: url(../images/pc/default_pic_l.png) no-repeat center;
     background-size: cover;
 }
