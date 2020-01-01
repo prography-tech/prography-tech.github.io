@@ -1,10 +1,9 @@
-# 2019-12-31-Github_action_ecs.md
 ---
 layout: post #require
 title: "Github action CI/CD를 이용해서 ecs에 배포하기"
 author: "Q00"
 date: 2019-12-31 20:35 # 작성 날짜 등록 
-tags: [aws, ecs, CI\CD, deploy] 
+tags: [aws, ecs, CICD, deploy] 
 image: 'https://images.velog.io/post-images/q00/134d1220-1044-11ea-8074-fb5592e23915/-2019-11-26-8.58.16.png'
 ---
 
@@ -23,14 +22,14 @@ github action을 사용하기 전에 배포 프로세스는 아래와 같습니�
 
 ```shell
 #release로 pr시에
-docker build -t people .
-docker tag people:latest [aws-ecr-repository-url]/people:latest
+$ docker build -t people .
+$ docker tag people:latest [aws-ecr-repository-url]/people:latest
 
 #aws cli로그인 안되었을시
-aws ecr get-login --no-include-email
+$ aws ecr get-login --no-include-email
 
 #ecr에 docker image 업로드
-docker push [aws-ecr-repository-url]/people:latest
+$ docker push [aws-ecr-repository-url]/people:latest
 
 #ecs에서 task definition에 서비스 업데이트 ( 새배포적용)
 ```
@@ -42,26 +41,23 @@ docker push [aws-ecr-repository-url]/people:latest
 ![image.png](https://images.velog.io/post-images/q00/e7065c60-0c67-11ea-af87-0d4ce85d5d9f/image.png)
 
 ### 스토리지 및 로깅탭 설정
-이미 ecs를 사용하고 있으면 새개정 생성 후 container 생성 창에서 스토리지 및 로깅탭의 auto-configure CloudWatch logs를 클릭합니다.
 
-그 후 서비스 생성이나 서비스 업데이트를 진행해주세요.
-
-생성이 된 후에는
+이미 ecs를 사용하고 있으면 새개정 생성 후 container 생성 창에서 스토리지 및 로깅탭의 auto-configure CloudWatch logs를 클릭합니다. 그 후 서비스 생성이나 서비스 업데이트를 진행해주세요. 생성이 된 후에는
 
 ![image.png](https://images.velog.io/post-images/q00/c94bc6a0-0c68-11ea-8b55-1b8dd942becb/image.png)
 
 json탭에서 json을 복사 후 
-```
-aws ecs register-task-definition --generate-cli-skeleton >> task-definition.json
+```bash
+$ aws ecs register-task-definition --generate-cli-skeleton >> task-definition.json
 ```
 명령어를 치신 후 복사한 json과 비교하며 빈값을 채워줍니다.
 모르고 json탭에 복사한 걸 넣었다가 저는 아주 고역을 치뤘습니다.
 ### task-definition.json
 [task-definition 변수](https://docs.aws.amazon.com/ko_kr/AmazonECS/latest/developerguide/task_definition_parameters.html) 정독하시고 잘 설정하시길 바랍니다..
-다 만들면 root directory에 task-defi
 
-피플의 task-definition
-```
+다 만들면 root directory에 task-definition을 아래와 같이 처리합니다.
+
+```json
 {
   "ipcMode": "task",
   "containerDefinitions": [
@@ -136,6 +132,7 @@ aws ecs register-task-definition --generate-cli-skeleton >> task-definition.json
 ```
 
 ### github action aws.yml 설정
+
 그 후 github action을 클릭 후 ecs를 선택합니다.
 
 ![image.png](https://images.velog.io/post-images/q00/f042e770-0c68-11ea-af87-0d4ce85d5d9f/image.png)
@@ -145,7 +142,7 @@ repository setting tab에 secret에 secret 변수들을 설정해줍니다.
 어디 브랜치에 커밋이 되었거나 pr이 되었을때 CI/CD가 작동할 수 있도록 브랜치 설정도 해줍니다.
 
 aws.yml
-```
+```yml
 on:
   push:
     branches:
