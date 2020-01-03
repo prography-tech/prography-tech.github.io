@@ -1,17 +1,16 @@
 ---
 layout: page
-title: Prography Service
-image: https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1500&q=80
+title: Service 
+image: https://images.unsplash.com/photo-1533022139390-e31c488d69e2?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1789&q=80
 permalink: /service/
 sitemap: yes
-excerpt: 프로그라피에서 나온 서비스들을 소개합니다.
+description: 프로그라피에서 나온 서비스들을 소개합니다.
 ---
-
+<link rel="stylesheet" href="../assets/css/screen.css">
 <link rel="stylesheet" href="../assets/css/service.css">
 <div class="row">
 	{% for item in site.data.service.defaults %}
-	<div class="col-sm-6">
-		<div class="card">
+	    <div class="card col-sm-12">
 			<div class="card-body">
 				<h2 class="card-title" style="margin:10px 0 0 0;">{{ item.name }}</h2>
 				<h6 class="card-subtitle mb-2 text-muted" style="margin-top:10px">{{ item.title }}</h6>
@@ -27,10 +26,6 @@ excerpt: 프로그라피에서 나온 서비스들을 소개합니다.
 					<a href="{{ tag_url }}" target="_blank" title="opensource" class="tag tag-opensource" style="text-decoration: none">{{ tag }}</a>
 					{% endfor %}
 				</p><br/>
-				<a href="{{ item.github }}" target="_blank" class="btn btn-primary" style="color:#e91e63; text-decoration: none;">> GitHub</a>
-				{% if item.github2 %}
-				<a href="{{ item.github2 }}" target="_blank" class="btn btn-primary"  style="color:#e91e63; text-decoration: none;">> GitHub2</a>
-                {% endif %}
                 {% if item.website %}
 				<a href="{{ item.website }}" target="_blank" class="btn btn-primary" style="color:#e91e63; text-decoration: none;">> Website</a>
                 {% endif %}
@@ -41,7 +36,12 @@ excerpt: 프로그라피에서 나온 서비스들을 소개합니다.
 				<a href="{{ item.ios }}" target="_blank" class="btn btn-primary" style="color:#e91e63; text-decoration: none;">> Ios</a>
 				{% endif %}
 			</div>
-		</div>
-	</div>
+	    </div>
 	{% endfor %}
 </div>
+<style>
+.card {
+	width: 100%;
+	margin: 1.25rem;
+}
+</style>
