@@ -29,7 +29,7 @@ image: 'https://wonbeomjang.github.io/assets/posts/zipyak/zipyak-icon.png' # 원
 
 ## 기획 변경
 ### 소비자의 환경을 파악하라
-![app-store-icon](/assets/posts/zipyak/voiceover.png)  
+![voiceover-icon](/assets/posts/zipyak/voiceover.png)  
 
 인터뷰를 하던 도중 약학정보를 얻기 힘들다는 이야기를 들었습니다. 그 소리를 듣는 순간 사용할 수 있는 서비스가 없나? 라는 생각이 들었고 앱스토어서 관련서비스를 찾아봤고 iOS 모바일 어플리케이션에서 시각장애인이 사용할 수 있는 서비스가 없었습니다.  
 
