@@ -1,0 +1,40 @@
+defaults:
+  - name: 헤쳐모여 
+    github: https://github.com/apache/incubator-s2graph
+    title: 운동 목표 기록 서비스
+
+    content: 러닝, 사이클에 대한 개인의 운동 목표 설정, 기록, 공유 서비스
+    tags:
+     - Node.js
+     - Android
+
+  - name:  DailyPicture
+    github: https://github.com/prography/dailypicture-backend
+    github2: https://github.com/prography/dailypicture-android
+    android: https://play.google.com/store/apps/details?id=org.techtown.dailypicture
+    title: 매일 일상의 변화 기록 
+    content: 매일의 변화 기록 및 영상 변환 서비스 
+    tags:
+      - Android
+      - Kotlin
+      - Python
+      - Django
+      - PostgreSql
+      - Docker
+      - AWS 
+      - Github
+
+tagmap:
+  - tag: Github
+    url: http://github.com/
+  - tag: AWS
+    url: http://aws.amazon.com/
+  - tag: PostgreSql
+    url: https://www.postgresql.org/
+  - tag: MySQL
+    url: http://www.mysql.com
+  - tag: Docker
+    url: https://docs.docker.com/
+  - tag: Node.js
+  - url: https://nodejs.org/
+ 
