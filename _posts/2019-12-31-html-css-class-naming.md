@@ -98,4 +98,4 @@ BEM은 클래스와 스타일의 네이밍을 위한 규칙 중 하나입니다.
 
 [Methodology](https://en.bem.info/methodology/quick-start/#block)
 
-[BEM( Block, Element, Modifier) Quick start](
+[BEM( Block, Element, Modifier) Quick start](https://velog.io/@yesdoing/BEM-Block-Element-Modifier-Quick-start)

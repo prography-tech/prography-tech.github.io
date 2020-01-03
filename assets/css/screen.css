@@ -1043,6 +1043,9 @@ body.tag-template #navbar {
     text-align: center;
 }
 
+#post-content img {
+    width: 100%;
+}
 #post-content td {
     border: 1px solid #e6e6e6;
     padding: 10px;
