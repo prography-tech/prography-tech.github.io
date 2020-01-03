@@ -8,6 +8,7 @@ description: 프로그라피에서 탄생한 서비스들을 소개합니다.
 ---
 <link rel="stylesheet" href="../assets/css/screen.css">
 <link rel="stylesheet" href="../assets/css/service.css">
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 <div class="row">
 	{% for item in site.data.service.defaults %}
 	    <div class="card col-sm-12">
@@ -21,10 +22,12 @@ description: 프로그라피에서 탄생한 서비스들을 소개합니다.
 					{% endfor %}
 				</p><br/>
                 {% if item.website %}
-					<a href="{{ item.website }}" target="_blank" class="btn btn-primary" style="color:#e91e63; text-decoration: none;"> > Website </a>
+					<a href="{{ item.website }}" target="_blank" class="btn btn-primary" style="color:#e91e63; padding-bottom:0px; text-decoration: none;"><i class="material-icons">laptop_mac</i></a>
                 {% endif %}
                 {% if item.android %}
-				<a href="{{ item.android }}" target="_blank" class="btn btn-primary" style="color:#e91e63; text-decoration: none;">> Android</a>
+				<a href="{{ item.android }}" target="_blank" class="btn btn-primary" style="border-color: #CDDC39; color:#CDDC39; text-decoration: none; padding-bottom:0px;">
+					<i class="material-icons">android</i>
+				</a>
                 {% endif %}
                 {% if item.ios %}
 				<a href="{{ item.ios }}" target="_blank" class="btn btn-primary" style="color:#e91e63; text-decoration: none;">> Ios</a>
