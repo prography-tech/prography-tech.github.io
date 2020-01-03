@@ -17,14 +17,22 @@ defaults:
      - Android
 
   - name:  DailyPicture
-    android: https://play.google.com/store/apps/details?id=org.techtown.dailypicture
     title: 매일 일상의 변화 기록 
     content: 기록을 한 사진들을 일정 이상의 사진들이 기록되면, 영상으로 변환하여 변화를 한눈에 볼 수 있습니다.
+    android: https://play.google.com/store/apps/details?id=org.techtown.dailypicture
     tags:
       - Android
       - Kotlin
       - Django
       - Docker
+
+  - name: cogether
+    title: 개발 관련 정보를 모아서 보여주는 서비스
+    content: Cogether은 개발자들에게 필요한 컨퍼런스, 교육 및 동아리 정보를 모아서 한 눈에 볼 수 있는 서비스입니다.
+    website: https://cogether.kr/
+    tags:
+     - Django
+     - React
 
 tagmap:
   - tag: Github
@@ -38,6 +46,10 @@ tagmap:
   - tag: Docker
     url: https://docs.docker.com/
   - tag: Node.js
-  - url: https://nodejs.org/
+    url: https://nodejs.org/
   - tag: Retrofit
-  - url: https://github.com/square/retrofit
+    url: https://github.com/square/retrofit
+  - tag: Django
+    url: https://www.djangoproject.com/
+  - tag: React
+    url: https://reactjs.org/
