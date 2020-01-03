@@ -1,9 +1,18 @@
 defaults:
+  - name: 쉼
+    title: 힐링 오디오 서비스
+    content: 쉼은 집중이나 휴식이 필요한 사람들에게 ASMR이나 클래식과 같은 오디오 컨텐츠를 제공합니다. 
+    github: https://github.com/prography/shim-and
+    github2: https://github.com/prography/shim-server
+    android: https://play.google.com/store/apps/details?id=co.shimm.app
+    tags:
+     - Node.js
+     - Android
+     - Retrofit2
   - name: 헤쳐모여 
     github: https://github.com/apache/incubator-s2graph
     title: 운동 목표 기록 서비스
-
-    content: 러닝, 사이클에 대한 개인의 운동 목표 설정, 기록, 공유 서비스
+    content: 러닝, 사이클에 대한 개인의 운동 목표 설정, 기록, 공유 서비스를 제공합니다
     tags:
      - Node.js
      - Android
@@ -37,4 +46,5 @@ tagmap:
     url: https://docs.docker.com/
   - tag: Node.js
   - url: https://nodejs.org/
- 
+  - tag: Retrofit
+  - url: https://github.com/square/retrofit
