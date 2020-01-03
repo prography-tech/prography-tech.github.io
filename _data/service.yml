@@ -25,14 +25,45 @@ defaults:
       - Kotlin
       - Django
       - Docker
-
+      
+  - name: Just Select pizzA
+    title: 토핑만 고르세요! 토핑에 맞는 피자를 찾아드립니다!
+    content: 원하는 토핑을 도우 위에 얹으면 가장 비슷한 피자를 찾아주는 서비스
+    tags:
+      - Node.js
+      - React
+      - AWS
+    website: http://jsa-pizza.coo.kr/
   - name: cogether
     title: 개발 관련 정보를 모아서 보여주는 서비스
     content: Cogether은 개발자들에게 필요한 컨퍼런스, 교육 및 동아리 정보를 모아서 한 눈에 볼 수 있는 서비스입니다.
     website: https://cogether.kr/
     tags:
-     - Django
-     - React
+      - Django
+      - React
+
+  - name: tingting
+    title: 대학생 미팅 소개팅 앱
+    content: 대학생을 위한 미팅 소개팅 모바일 서비스 플랫폼입니다
+    tags:
+      - Node.js
+      - AWS
+      - Android
+      - ios
+  - name: DDEP
+    title: 딥러닝 기반 얼굴 모자이크 서비스
+    content: 초상권 보호를 위한 얼굴 모자이크 서비스를 제공합니다.
+    tags:
+      - Computer Vision
+      - Deep Learning
+      - AWS
+  - name: 개같하
+    title: 개발 같이 하자!
+    content: 개발 모임을 만드는 서비스를 제공합니다
+    tags:
+      - Django
+      - React
+      - AWS
 
 tagmap:
   - tag: Github
