@@ -329,7 +329,7 @@ for small screen(<720px):
     right: 30px;
     bottom: 20px;
     z-index: 999;
-    background: url(../images/pc/icon_uarrow.png) no-repeat;
+    background: url(../images/mo/icon_uarrow.png) no-repeat;
     background-size: 29px 29px;
 }
 
@@ -1097,7 +1097,7 @@ body.tag-template #navbar {
     height: 120px;
     line-height: 120px;
     padding-right: 17px; /* 17px = 10(spacing) + 7(icon width) */
-    background: url(../images/pc/icon_rarrow.png) no-repeat right;
+    background: url(../images/mo/icon_rarrow.png) no-repeat right;
     background-size: 7px 11px;
     font-size: 14px;
 }

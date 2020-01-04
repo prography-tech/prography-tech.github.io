@@ -45,11 +45,30 @@ defaults:
   - name: tingting
     title: 대학생 미팅 소개팅 앱
     content: 대학생을 위한 미팅 소개팅 모바일 서비스 플랫폼입니다
+    android: not yet
+    ios: not yet
     tags:
       - Node.js
       - AWS
       - Android
       - ios
+  - name: 개같하
+    title: 개발 같이 하자!
+    content: 개발 모임을 만드는 서비스를 제공합니다
+    website: www.gaegata.com
+    tags:
+      - Django
+      - React
+      - AWS
+  - name: Fash
+    title: 딥러닝 기반 얼굴 모자이크 서비스
+    content: 코트vs롱패딩 고민되는 날엔 - 날씨기반 코디추천 서비스 fash! fash는 그 날의 날씨와 스타일을 제안합니다. 딥러닝을 활용하여 촬영한 한눈에 파악 할 수 있게 정리를 도와 줍니다.
+    ios: not yet
+    tags:
+      - Computer Vision
+      - Pytorch
+      - ios
+      - Django
   - name: DDEP
     title: 딥러닝 기반 얼굴 모자이크 서비스
     content: 초상권 보호를 위한 얼굴 모자이크 서비스를 제공합니다.
@@ -57,14 +76,7 @@ defaults:
       - Computer Vision
       - Deep Learning
       - AWS
-  - name: 개같하
-    title: 개발 같이 하자!
-    content: 개발 모임을 만드는 서비스를 제공합니다
-    tags:
-      - Django
-      - React
-      - AWS
-
+  
 tagmap:
   - tag: Github
     url: http://github.com/
