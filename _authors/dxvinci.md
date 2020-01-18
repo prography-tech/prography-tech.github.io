@@ -2,6 +2,7 @@
 name: dxvinci
 title: 김선욱
 image: https://ca.slack-edge.com/T7M95C9GQ-UGH9ZC9MF-6a1c65e3217d-512
+intro: react.js
 ---
 
 안녕하세요. 
