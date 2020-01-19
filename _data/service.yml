@@ -30,7 +30,7 @@ defaults:
       - Node.js
       - React
       - AWS
-    website: http://jsa-pizza.coo.kr/
+    website: http://www.jsa-pizza.com/
   - name: cogether
     title: 개발 관련 정보를 모아서 보여주는 서비스
     content: Cogether은 개발자들에게 필요한 컨퍼런스, 교육 및 동아리 정보를 모아서 한 눈에 볼 수 있는 서비스입니다.
