@@ -1,3 +1,4 @@
 # Ignore IDE Settings
 .idea
 _site
+.DS_Store
