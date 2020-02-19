@@ -20,10 +20,10 @@ intro: Recommendation, NLP
 
 
 #### Github
-https://github.com/SubAkBa
+[수박바의 깃허브](https://github.com/SubAkBa)
 
 #### Blog
-https://soobarkbar.tistory.com
+[수박바의 블로그](https://soobarkbar.tistory.com)
 
 #### Language
 Python, Pytorch, Java
