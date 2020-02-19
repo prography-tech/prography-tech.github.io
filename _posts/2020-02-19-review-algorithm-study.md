@@ -4,7 +4,7 @@ title: "전원 취뽀 성공한 프로그라피 5기 알고리즘 스터디 회�
 author: soom
 date: 2020-02-19 00:00
 tags: [algorithm, python]
-image:'https://upload.wikimedia.org/wikipedia/commons/thumb/d/db/Euclid_flowchar t.svg/440px-Euclid_flowchart.svg.png'
+image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/d/db/Euclid_flowchar t.svg/440px-Euclid_flowchart.svg.png'
 ---
 
 > 5기를 시작하며, 알고리즘 스터디를 모집하였다. 9주차에 __잔류인원 4명 중 3명이 취뽀 (1명은 재직중)에 성공__ 하였다! 
