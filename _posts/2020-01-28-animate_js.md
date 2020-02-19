@@ -2,7 +2,7 @@
 layout: post
 title: "Vue.js에서 Anime.js 사용하기"
 author: bluestragglr
-date: 2019-01-28 18:06
+date: 2020-01-28 18:06
 tags: [html, css, javascript]
 image: 'https://user-images.githubusercontent.com/44422495/73249696-b73acb80-41f8-11ea-813f-a9c02338245b.png'
 ---
