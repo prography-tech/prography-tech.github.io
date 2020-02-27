@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Basic 추천 시스템"
+title: "넷플릭스와 유튜브는 유저가 좋아할만한 것을 어떻게 추천해줄까?"
 author: "SubAkBa"
 date: 2020-02-24 00:00
 tags: [Recommendation]
