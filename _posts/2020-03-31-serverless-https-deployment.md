@@ -2,9 +2,9 @@
 layout: post
 title: "S3, ACM, CloudFront, Route53으로 서버리스 프로젝트 https 배포하기"
 author: bluestragglr
-date: 2020-03-04 12:39
+date: 2020-03-31 22:18
 tags: [aws, CloudFront, Route53]
-image: 'https://user-images.githubusercontent.com/44422495/78031060-f4a90a00-739d-11ea-8396-b02d7c66a0a0.png'
+image: 'https://user-images.githubusercontent.com/44422495/78035000-77809380-73a3-11ea-9138-ff90cc95a393.jpg'
 ---
 
 
@@ -63,25 +63,25 @@ S3는 아마존에서 제공하는 Simple Storage Service입니다. 단순히 �
 
 - 버킷 생성
 
-![S3%20ACM%20CloudFront%20Route53%20https/Untitled.png](/assets/posts/blueStragglr/s3-acm-cloudfront-route53//Untitled.png)
+![](/assets/posts/blueStragglr/s3-acm-cloudfront-route53//Untitled.png)
 
 우선 S3 버킷을 생성해 줍시다. S3를 저장소로 사용하는 경우라면 퍼블릭 액세스는 막아두는것이 맞겠지만, 저희는  빌드한 프로젝트를 업로드해서 공개할 예정이니 모든 퍼블릭 액세스를 오픈해줍니다. 
 
 - 파일 업로드 및 권한설정
 
-![S3%20ACM%20CloudFront%20Route53%20https/Untitled%201.png](/assets/posts/blueStragglr/s3-acm-cloudfront-route53//Untitled 1.png)
+![](/assets/posts/blueStragglr/s3-acm-cloudfront-route53//Untitled 1.png)
 
-![S3%20ACM%20CloudFront%20Route53%20https/Untitled%202.png](/assets/posts/blueStragglr/s3-acm-cloudfront-route53//Untitled 2.png)
+![](/assets/posts/blueStragglr/s3-acm-cloudfront-route53//Untitled 2.png)
 
 생성된 버킷을 찾아 들어가면 위의 화면이 나옵니다. 업로드를 누르면 나오는 창에 파일을 전부 끌어다 넣습니다. 폴더를 통채로 넣는 것이 아니라, `index.html` 이 루트 경로에 자리할 수 있도록 모든 파일을 긁어다 넣습니다.
 
 '다음' 버튼을 눌러 이것저것 설정할 수 있긴 한데, 따로 설정이 필요한 부분이 없으니 그냥 좌하단의 '업로드' 버튼을 눌러 줍니다. 
 
-![S3%20ACM%20CloudFront%20Route53%20https/Untitled%203.png](/assets/posts/blueStragglr/s3-acm-cloudfront-route53//Untitled 3.png)
+![](/assets/posts/blueStragglr/s3-acm-cloudfront-route53//Untitled 3.png)
 
 그 다음, 업로드 된 파일을 퍼블릭으로 설정 해 줍니다. 
 
-![S3%20ACM%20CloudFront%20Route53%20https/Untitled%204.png](/assets/posts/blueStragglr/s3-acm-cloudfront-route53//Untitled 4.png)
+![](/assets/posts/blueStragglr/s3-acm-cloudfront-route53//Untitled 4.png)
 
 마지막으로, [속성 > 정적 웹 사이트 호스팅]으로 이동하여 "이 버킷을 사용하여 웹 사이트를 호스팅합니다" 규칙을 설정 해 줍니다. 인덱스 문서에는 빌드된 파일의 인덱스 파일(보통 index.html)을 입력해 줍니다. 
 
@@ -98,27 +98,27 @@ S3는 아마존에서 제공하는 Simple Storage Service입니다. 단순히 �
 
 가비아를 기준으로 [My 가비아 > 전체 > 관리툴] 을 누르시면 아래와 같은 화면이 나옵니다.
 
-![S3%20ACM%20CloudFront%20Route53%20https/Untitled%205.png](/assets/posts/blueStragglr/s3-acm-cloudfront-route53//Untitled 5.png)
+![](/assets/posts/blueStragglr/s3-acm-cloudfront-route53//Untitled 5.png)
 
 해당 화면에서 네임서버 설정을 통해 AWS에서 해당 도메인을 사용할 수 있도록 등록할 수 있습니다. 
 
 가비아 창은 닫지 말고, 새 창을 통해 AWS 콘솔로 돌아와 봅시다. [서비스 >Route 53]에 들어오면 아래와 같은 대시보드가 있습니다.
 
-![S3%20ACM%20CloudFront%20Route53%20https/Untitled%206.png](/assets/posts/blueStragglr/s3-acm-cloudfront-route53//Untitled 6.png)
+![](/assets/posts/blueStragglr/s3-acm-cloudfront-route53//Untitled 6.png)
 
 좌상단의 호스팅 영역 생성을 누르면 오른쪽에 이런 폼이 등장합니다.
 
-![S3%20ACM%20CloudFront%20Route53%20https/Untitled%207.png](/assets/posts/blueStragglr/s3-acm-cloudfront-route53//Untitled 7.png)
+![](/assets/posts/blueStragglr/s3-acm-cloudfront-route53//Untitled 7.png)
 
 도메인 이름에 구매한 도메인을 작성합니다. 설명은 따로 작성하지 않아도 되고, 저희의 목적은 퍼블릭한 배포이니 유형은 퍼블릭 호스팅 영역을 그대로 놔둡니다. 
 
 그러면 호스팅 영역 하나가 생성됩니다. 눌러서 들어가면 아래와 같이 두 개의 레코드가 있습니다. 레코드는 도메인에 접근했을 때 취할 행동 정도로 생각해 두시면 편할 것 같습니다. 
 
-![S3%20ACM%20CloudFront%20Route53%20https/Untitled%208.png](/assets/posts/blueStragglr/s3-acm-cloudfront-route53//Untitled 8.png)
+![](/assets/posts/blueStragglr/s3-acm-cloudfront-route53//Untitled 8.png)
 
 여기서 유형이 NS인 (네임서버) 값들을 가비아에 등록할 것입니다. 아까 끄지 않고 남겨둔 가비아 창에서 네임서버 설정을 누르면 아래와 같은 창이 나옵니다. 아래의 입력에 네임서버에 있는 각 값들을 한줄씩 옮깁니다. 이 때, 맨 뒤에 있는 `.` 은 지우고 넣어 줍니다. 
 
-![S3%20ACM%20CloudFront%20Route53%20https/Untitled%209.png](/assets/posts/blueStragglr/s3-acm-cloudfront-route53//Untitled 9.png)
+![](/assets/posts/blueStragglr/s3-acm-cloudfront-route53//Untitled 9.png)
 
 좋습니다! 여기까지 오셨으면 Route53에 구매하신 도메인 연결이 마무리 된 것입니다. 
 
@@ -130,25 +130,25 @@ https를 사용하기 위해서는 인증서가 필요합니다. AWS에서 제�
 
 **그런데 잠깐!** 아주 중요한 것이 있습니다. 저희는 CloudFront를 이용해서 배포를 진행할 것이기 때문에, 서비스 지역을 꼭 "N. Virginia (버지니아 북부)"로 지정하고 키를 만들어야 합니다. CloudFront에서는 N. Virginia에 생성된 키만 사용할 수 있습니다. 
 
-![S3%20ACM%20CloudFront%20Route53%20https/Untitled%2010.png](/assets/posts/blueStragglr/s3-acm-cloudfront-route53//Untitled 10.png)
+![](/assets/posts/blueStragglr/s3-acm-cloudfront-route53//Untitled 10.png)
 
 이제 시작해 봅시다. 시작하기를 눌러서 공인 인증서 요청을 선택하고
 
-![S3%20ACM%20CloudFront%20Route53%20https/Untitled%2011.png](/assets/posts/blueStragglr/s3-acm-cloudfront-route53//Untitled 11.png)
+![](/assets/posts/blueStragglr/s3-acm-cloudfront-route53//Untitled 11.png)
 
 도메인 이름을 써 줍시다. 
 
-![S3%20ACM%20CloudFront%20Route53%20https/Untitled%2012.png](/assets/posts/blueStragglr/s3-acm-cloudfront-route53//Untitled 12.png)
+![](/assets/posts/blueStragglr/s3-acm-cloudfront-route53//Untitled 12.png)
 
 이 때, 나중에 my-prefix.my-url.com(ex. www.my-url.com, [admin.my-url.com](http://admin.my-url.com) 등)과 my-url.com(www 없는 주소) 모두에서 접속이 원활하게 이루어질 수 있도록 하고 싶다면 "이 인증서에 다른 이름 추가" 버튼을 눌러서 위와 같이 두 개의 도메인을 입력 해 줍니다. 
 
 이제 도메인의 소유권을 인증해야 합니다. 앞 단계에서 Route53에 도메인을 등록 해 두었으니, DNS 검증을 선택해 줍니다. 
 
-![S3%20ACM%20CloudFront%20Route53%20https/Untitled%2013.png](/assets/posts/blueStragglr/s3-acm-cloudfront-route53//Untitled 13.png)
+![](/assets/posts/blueStragglr/s3-acm-cloudfront-route53//Untitled 13.png)
 
 이제 완료하면 아래와 같은 창이 뜹니다. (상태는 주황색 대기중으로 표시됩니다.)
 
-![S3%20ACM%20CloudFront%20Route53%20https/Untitled%2014.png](/assets/posts/blueStragglr/s3-acm-cloudfront-route53//Untitled 14.png)
+![](/assets/posts/blueStragglr/s3-acm-cloudfront-route53//Untitled 14.png)
 
 저는 이미 생성을 완료해서 좌하단의 "Route53에서 레코드 생성" 버튼이 비활성화 되어있지만, 키를 만드신 직후라면 활성화 되어 있을 것입니다. 누르면 작은 팝업이 뜨는데, 해당 팝업에서 DNS 인증을 위한 레코드를 등록할 수 있습니다.
 
@@ -162,17 +162,17 @@ https를 사용하기 위해서는 인증서가 필요합니다. AWS에서 제�
 
 CloudFront에 처음 들어가면 이런 화면이 반겨줍니다. 아직 CloudFront 콘솔은 한국어를 지원하지 않고 있습니다. 
 
-![S3%20ACM%20CloudFront%20Route53%20https/Untitled%2015.png](/assets/posts/blueStragglr/s3-acm-cloudfront-route53//Untitled 15.png)
+![](/assets/posts/blueStragglr/s3-acm-cloudfront-route53//Untitled 15.png)
 
 Create Distribution을 선택해서 새 배포 설정을 만듭니다.
 
-![S3%20ACM%20CloudFront%20Route53%20https/Untitled%2016.png](/assets/posts/blueStragglr/s3-acm-cloudfront-route53//Untitled 16.png)
+![](/assets/posts/blueStragglr/s3-acm-cloudfront-route53//Untitled 16.png)
 
 Web으로 만들어 줍니다. 밑에 노란색 어그로는 2020년 연말 이후로는 RTMP를 지원하지 않는다는 소리인데 저희랑 관련이 없으니 지나쳐 줍시다.
 
 Get Started를 누르면 바로 숨막히는 양의 설정창이 저희를 반겨줍니다. 겁먹지 말고 하나씩 해 봅시다.
 
-![S3%20ACM%20CloudFront%20Route53%20https/Untitled%2017.png](/assets/posts/blueStragglr/s3-acm-cloudfront-route53//Untitled 17.png)
+![](/assets/posts/blueStragglr/s3-acm-cloudfront-route53//Untitled 17.png)
 
 Origin Domain Name - 클릭하면 사용 가능한 도메인이 주루룩 뜹니다. 생성해둔 S3 버킷이 있을겁니다. 배포할 버킷을 선택합시다.
 
@@ -182,7 +182,7 @@ Viewer Protocol Policy - HTTP로 들어온 것도 HTTPS로 리다이렉트 하�
 
 이제 나머지는 그냥 다 놔두고 쭉쭉 여기(Distribution Settings)까지 내려옵니다.
 
-![S3%20ACM%20CloudFront%20Route53%20https/Untitled%2018.png](/assets/posts/blueStragglr/s3-acm-cloudfront-route53//Untitled 18.png)
+![](/assets/posts/blueStragglr/s3-acm-cloudfront-route53//Untitled 18.png)
 
 Price Class - 퍼포먼스에 비례해서 가격이 오릅니다. 실시간성이 크게 중요한 서비스가 아니라면 싼걸로 하고, 인터랙션 실시간성이 높다면 지금 선택된 옵션을 골라서 돈을 좀 씁시다.
 
@@ -192,13 +192,13 @@ SSL Certificate - Custom SSL Certificate를 선택하면 ACM에서 설정한 인
 
 마지막으로 Default Root Object를 설정해 줍니다. 
 
-![S3%20ACM%20CloudFront%20Route53%20https/Untitled%2019.png](/assets/posts/blueStragglr/s3-acm-cloudfront-route53//Untitled 19.png)
+![](/assets/posts/blueStragglr/s3-acm-cloudfront-route53//Untitled 19.png)
 
 Default Root Object - S3버킷 호스팅의 디폴트 오브젝트인 index.html을 입력해 줍니다
 
 수고하셨습니다! 이제 CloudFront 셋업도 끝났습니다. CloudFront는 반영되는데 시간이 좀 걸려서 Status 뱅뱅이가 좀 오래 돕니다. 5~30분 정도 도는 것으로 알고 있습니다. 여유롭게 물 한잔 떠오고 다음 단계로 넘어갑시다.
 
-![S3%20ACM%20CloudFront%20Route53%20https/Untitled%2020.png](/assets/posts/blueStragglr/s3-acm-cloudfront-route53//Untitled 20.png)
+![](/assets/posts/blueStragglr/s3-acm-cloudfront-route53//Untitled 20.png)
 
 여기까지 제대로 진행되었는지 확인하려면 "Domain Name"을 주소창에 붙여넣기 했을 때 배포한 것이 제대로 표시되는지 확인해 보면 됩니다. 이 과정에서 Access Denied 에러가 굉장히 빈번하게 발생하는데, 아래와 같은 것들을 체크 해 보면 대부분 해결됩니다.
 
@@ -212,19 +212,19 @@ Default Root Object - S3버킷 호스팅의 디폴트 오브젝트인 index.html
 
 Route53으로 대시보드에서 사용할 도메인 이름을 눌러 호스팅 영역 페이지로 진입합니다. 
 
-![S3%20ACM%20CloudFront%20Route53%20https/Untitled%2021.png](/assets/posts/blueStragglr/s3-acm-cloudfront-route53//Untitled 21.png)
+![](/assets/posts/blueStragglr/s3-acm-cloudfront-route53//Untitled 21.png)
 
 좌상단의 "레코드 세트 생성"을 눌러서 두 개의 레코드를 추가할 것입니다. 하나는 www.my-url.com으로 들어오는 연결에 대한 것이고, 하나는 www 없이 my-url.com으로 들어오는 연결에 대한 것입니다.
 
 www.my-url.com으로 들어오는 것
 
-![S3%20ACM%20CloudFront%20Route53%20https/Untitled%2022.png](/assets/posts/blueStragglr/s3-acm-cloudfront-route53//Untitled 22.png)
+![](/assets/posts/blueStragglr/s3-acm-cloudfront-route53//Untitled 22.png)
 
 이름에 www를 붙이고 별칭은 아니오, 값에는 CloudFront에 있는 도메인 값을 붙여넣습니다.
 
 www 없이 my-url.com으로 들어오는 것
 
-![S3%20ACM%20CloudFront%20Route53%20https/Untitled%2023.png](/assets/posts/blueStragglr/s3-acm-cloudfront-route53//Untitled 23.png)
+![](/assets/posts/blueStragglr/s3-acm-cloudfront-route53//Untitled 23.png)
 
 이름을 입력하지 않고 별칭은 예, 별칭 대상은 아까 만든 CloudFront 배포를 선택해 줍니다.
 
