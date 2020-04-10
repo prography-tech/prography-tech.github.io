@@ -10,13 +10,13 @@ image: 'https://wonbeomjang.github.io/assets/posts/zipyak/zipyak-icon.png' # 원
 안녕하세요. 프로그라피 Deep Learning 운영진 장원범입니다. 저는 친구와 함께 시각장애인을 위한 약학정보 서비스를 기획하고 개발하고 있습니다. 서비스를 기획하면서 많은 조사와 인터뷰를 진행해 그 경험을 나누고자 합니다.  
 
 ## 들어가면서  
-![zipyak-icon](/assets/posts/zipyak/zipyak-icon.png)
+![zipyak-icon](/assets/posts/wonbeomjang/zipyak/zipyak-icon.png)
 
 우리는 집에 여러개의 상비약들이 있습니다. 우리는 약상자를 보고 원하는 약을 찾을 수 있지만 시각장애인분들은 찾을 수 있을까요? 저희는 이러한 문제에 주목했고 '집에 있는 약을 구분을 할 수 있도록 하자'는 생각으로 서비스를 기획하게 되었습니다.   
 
 ## 서비스 기획  
 ### 인터뷰의 필요성  
-![zipyak-interview](/assets/posts/zipyak/zipyak-interview.png)
+![zipyak-interview](/assets/posts/wonbeomjang/zipyak/zipyak-interview.png)
 
 처음에는 약학정보 서비스가 아닌 시각장애인을 위한 코디추천 서비스를 기획했습니다. 시각장애인들은 눈이 안보이니 자신이 가지고 있는 옷이 무엇인지 코디를 어떻게 할지 모를거라고 생각했고 여러 논문을 찾아보니 시각장애인들은 기억력의 한계 때문에 비시각장애인보다 옷을 적게 갖고있다고 했습니다. 그래서 시각장애인을 위한 코디추천 서비스를 열심히 기획해 기획안을 들고 한 시각장애인분께 부탁을 드려 인터뷰를 진행하기로 했습니다.
 
@@ -29,11 +29,11 @@ image: 'https://wonbeomjang.github.io/assets/posts/zipyak/zipyak-icon.png' # 원
 
 ## 기획 변경
 ### 소비자의 환경을 파악하라
-![voiceover-icon](/assets/posts/zipyak/voiceover.png)  
+![voiceover-icon](/assets/posts/wonbeomjang/zipyak/voiceover.png)  
 
 인터뷰를 하던 도중 약학정보를 얻기 힘들다는 이야기를 들었습니다. 그 소리를 듣는 순간 사용할 수 있는 서비스가 없나? 라는 생각이 들었고 앱스토어서 관련서비스를 찾아봤고 iOS 모바일 어플리케이션에서 시각장애인이 사용할 수 있는 서비스가 없었습니다.  
 
-![incorrect-app-label](/assets/posts/zipyak/incorrect-app-label.png)  
+![incorrect-app-label](/assets/posts/wonbeomjang/zipyak/incorrect-app-label.png)  
 
 많은 어플리케이션은 label을 만들 때 다음과 같이 만듭니다. *이러한 labeling이 왜 문제가 될까요?*  
 시각장애인들은 Voice Assistance나 Voice Over와 같은 스크린 리더를 통해 화면을 읽습니다. 이 스크린 리더는 Componentent들의 label이나 text 값을 읽어주기 때문에 이것을 고려를 안하고 앱을 제작하면 시각장애인들이 쓸 수 없게 됩니다.     
@@ -43,7 +43,7 @@ image: 'https://wonbeomjang.github.io/assets/posts/zipyak/zipyak-icon.png' # 원
 ### 시각장애인을 위한 UI/UX  
 #### UI에 대해
 다음으로 집약팀은 시각장애인이 선호하는 UI를 파악하려고 노력했습니다.   
-![app-ui-for-blind](/assets/posts/zipyak/app-ui-for-bilind.png)
+![app-ui-for-blind](/assets/posts/wonbeomjang/zipyak/app-ui-for-bilind.png)
 
 맨 왼쪽부터 '행복을 들려주는 도서관', 'Be my eyes', '설리번 플러스' 시각장애인들이 많이 사용하는 3가지 어플리케이션입니다. 이러한 어플리케이션들은 평소에 사용하는 어플리케이션과 UI가 다른 것을 눈치채셨나요? 이 어플리케이션들의 특징은 다음과 같습니다.  
 
@@ -61,7 +61,7 @@ image: 'https://wonbeomjang.github.io/assets/posts/zipyak/zipyak-icon.png' # 원
  
 #### UX에 대해
 
-![search-method-compare](/assets/posts/zipyak/search-method-compare.png)
+![search-method-compare](/assets/posts/wonbeomjang/zipyak/search-method-compare.png)
 시각장애인들의 약 구분을 위해 사진을 찍고 찍은 사진을 통해 검색을 하는 기능을 넣기로 했고 이 기능을 만드는 것에 대한 두 가지 방안이 존재했습니다.
 
 1. 바코드로 검색한다.  
@@ -82,7 +82,7 @@ image: 'https://wonbeomjang.github.io/assets/posts/zipyak/zipyak-icon.png' # 원
 검색을 위해 사진을 찍을 때 집약팀은 편한 사용성을 위해 화면중 아무곳이나 클릭하여 사지을 찍을 수 있도록 했습니다. 하지만 사용자는 주변에 가져가기만 해도 사진이 찍히는 것으로 생각해 어플리케이션이 정상작동이 안된다고 결론을 내렸습니다.
 
 ### 집약만의 차이점?
-![barcode](/assets/posts/zipyak/barcode.jpg)  
+![barcode](/assets/posts/wonbeomjang/zipyak/barcode.jpg)  
 
 사실 이 서비스를 만드는 도중 2019년 10월 중반에 시각장애인을 위한 약학정보서비스가 나왔습니다. 인터뷰를 진행했을 때고 이러한 이야기가 나왔습니다. 이 서비스를 A리고 하겠습니다. A는 이전의 어플리케이션과 달리 이 어플리케이션은 스크린리더를 제대로 고려해 어플리케이션을 제작했습니다. 그에 대항하기 위해 집약은 A와 차별점을 두었습니다. A는 바코드를 이용해 사진으로 검색을 할 수 있지만 인터뷰를 진행하는 도중 바코드를 찾을 수 없어 A서비스의 바코드로 검색하는 기능을 사용할 수 없다고 했습니다. 집약은 이와 차별을 두기 위해 비교적 사진을 찍기 쉬운 약상자의 겉표지를 분석해 약을 검색을 할 수 있 했습니다..
 
