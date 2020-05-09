@@ -54,7 +54,7 @@
 3. Bundle 설치하기
    이제 사용하는 command line 도구(i.e. terminal)에서 프로젝트 폴더로 이동 해 주세요. 프로젝트 폴더의 최상위 경로에서 `$ bundle install` 을 실행하여 필요한 bundle들을 설치 해 줍니다. 해당 과정은 시간이 다소 소요됩니다!
 4. 로컬 환경에서 실행하기
-   이제 command line 도구에서 `$ jekyll serve` 를 실행하면 로컬 환경에서 빌드된 블로그를 확인할 수 있ㅅ브니다. 
+   이제 command line 도구에서 `$ jekyll serve` 를 실행하면 로컬 환경에서 빌드된 블로그를 확인할 수 있습니다. 
 
 
 
