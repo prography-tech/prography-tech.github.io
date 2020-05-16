@@ -2,6 +2,8 @@
 
 프로그라피 기술 블로그입니다. 
 
+https://prography-tech.github.io/
+
 - 이 블로그는 Jekyll은 로 만들어져있습니다. 아래 사이트를 확인해 주세요
     https://jekyllrb-ko.github.io/docs/installation/
 - 위 내용을 숙지 후 작업해주세요! 
