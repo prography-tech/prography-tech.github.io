@@ -1,0 +1,199 @@
+I"+H<p>안녕하세요. 프로그라피 nodejs 멘토 이재규입니다.
+저는 <a href="http://pple.link">pple</a>이라는 전국민 헌혈 참여 플랫폼을 개발하고 있습니다. 곧 2차 릴리즈가 배포되면 많이 글을 쓸 예정이니 많이 관심 가져주세요!</p>
+
+<p><img src="https://images.velog.io/post-images/q00/66c5e9c0-0c68-11ea-af87-0d4ce85d5d9f/image.png" alt="image.png" /></p>
+
+<p>2020년 새해복 많이 받으시기 바랍니다.</p>
+
+<p>피플은 배포를 docker와 aws의 ecs로 배포를 하고 있습니다.</p>
+
+<h2 id="기존-배포-프로세스">기존 배포 프로세스</h2>
+<p>github action을 사용하기 전에 배포 프로세스는 아래와 같습니다.</p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">#release로 pr시에</span>
+<span class="nv">$ </span>docker build <span class="nt">-t</span> people <span class="nb">.</span>
+<span class="nv">$ </span>docker tag people:latest <span class="o">[</span>aws-ecr-repository-url]/people:latest
+
+<span class="c">#aws cli로그인 안되었을시</span>
+<span class="nv">$ </span>aws ecr get-login <span class="nt">--no-include-email</span>
+
+<span class="c">#ecr에 docker image 업로드</span>
+<span class="nv">$ </span>docker push <span class="o">[</span>aws-ecr-repository-url]/people:latest
+
+<span class="c">#ecs에서 task definition에 서비스 업데이트 ( 새배포적용)</span>
+</code></pre></div></div>
+
+<h2 id="github-action-cicd">Github Action CI/CD</h2>
+<p>그럼 이번에는 Github Action CI/CD를 이용해봅시다.
+필수조건은 ecr repository와 ecs cluster가 존재해야됩니다.
+<img src="https://images.velog.io/post-images/q00/e7065c60-0c67-11ea-af87-0d4ce85d5d9f/image.png" alt="image.png" /></p>
+
+<h3 id="스토리지-및-로깅탭-설정">스토리지 및 로깅탭 설정</h3>
+
+<p>이미 ecs를 사용하고 있으면 새개정 생성 후 container 생성 창에서 스토리지 및 로깅탭의 auto-configure CloudWatch logs를 클릭합니다. 그 후 서비스 생성이나 서비스 업데이트를 진행해주세요. 생성이 된 후에는</p>
+
+<p><img src="https://images.velog.io/post-images/q00/c94bc6a0-0c68-11ea-8b55-1b8dd942becb/image.png" alt="image.png" /></p>
+
+<p>json탭에서 json을 복사 후</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>aws ecs register-task-definition <span class="nt">--generate-cli-skeleton</span> <span class="o">&gt;&gt;</span> task-definition.json
+</code></pre></div></div>
+<p>명령어를 치신 후 복사한 json과 비교하며 빈값을 채워줍니다.
+모르고 json탭에 복사한 걸 넣었다가 저는 아주 고역을 치뤘습니다.</p>
+<h3 id="task-definitionjson">task-definition.json</h3>
+<p><a href="https://docs.aws.amazon.com/ko_kr/AmazonECS/latest/developerguide/task_definition_parameters.html">task-definition 변수</a> 정독하시고 잘 설정하시길 바랍니다..</p>
+
+<p>다 만들면 root directory에 task-definition을 아래와 같이 처리합니다.</p>
+
+<div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{</span><span class="w">
+  </span><span class="nl">"ipcMode"</span><span class="p">:</span><span class="w"> </span><span class="s2">"task"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"containerDefinitions"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="nl">"dnsSearchDomains"</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span><span class="w">
+      </span><span class="nl">"logConfiguration"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nl">"logDriver"</span><span class="p">:</span><span class="w"> </span><span class="s2">"awslogs"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"secretOptions"</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span><span class="w">
+        </span><span class="nl">"options"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+          </span><span class="nl">"awslogs-group"</span><span class="p">:</span><span class="w"> </span><span class="s2">"/ecs/로그이름"</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"awslogs-region"</span><span class="p">:</span><span class="w"> </span><span class="s2">"리전"</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"awslogs-stream-prefix"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ecs"</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+      </span><span class="p">},</span><span class="w">
+      </span><span class="nl">"entryPoint"</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span><span class="w">
+      </span><span class="nl">"portMappings"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+          </span><span class="nl">"hostPort"</span><span class="p">:</span><span class="w"> </span><span class="mi">80</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"protocol"</span><span class="p">:</span><span class="w"> </span><span class="s2">"tcp"</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"containerPort"</span><span class="p">:</span><span class="w"> </span><span class="mi">3000</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+      </span><span class="p">],</span><span class="w">
+      </span><span class="nl">"command"</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span><span class="w">
+      </span><span class="nl">"linuxParameters"</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span><span class="w">
+      </span><span class="nl">"environment"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+          </span><span class="nl">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"환경변수"</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"value"</span><span class="p">:</span><span class="w"> </span><span class="s2">"환경변수 값"</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+      </span><span class="p">],</span><span class="w">
+      </span><span class="nl">"resourceRequirements"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+            </span><span class="p">],</span><span class="w">
+      </span><span class="nl">"ulimits"</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span><span class="w">
+      </span><span class="nl">"dnsServers"</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span><span class="w">
+      </span><span class="nl">"mountPoints"</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span><span class="w">
+      </span><span class="nl">"secrets"</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span><span class="w">
+      </span><span class="nl">"dockerSecurityOptions"</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span><span class="w">
+      </span><span class="nl">"memoryReservation"</span><span class="p">:</span><span class="w"> </span><span class="mi">512</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"volumesFrom"</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span><span class="w">
+      </span><span class="nl">"stopTimeout"</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"image"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ecr 이미지 이름"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"startTimeout"</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"dependsOn"</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span><span class="w">
+      </span><span class="nl">"workingDirectory"</span><span class="p">:</span><span class="w"> </span><span class="s2">"도커파일 workdir과 매칭"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"interactive"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"healthCheck"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                </span><span class="nl">"command"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+                   </span><span class="s2">"CMD-SHELL"</span><span class="p">,</span><span class="w"> </span><span class="s2">"curl -f http://localhost/ || exit 1"</span><span class="w"> 
+                </span><span class="p">],</span><span class="w">
+                </span><span class="nl">"interval"</span><span class="p">:</span><span class="w"> </span><span class="mi">300</span><span class="p">,</span><span class="w">
+                </span><span class="nl">"timeout"</span><span class="p">:</span><span class="w"> </span><span class="mi">30</span><span class="p">,</span><span class="w">
+                </span><span class="nl">"retries"</span><span class="p">:</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span><span class="w">
+                </span><span class="nl">"startPeriod"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="w">
+            </span><span class="p">},</span><span class="w">
+      </span><span class="nl">"essential"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"links"</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span><span class="w">
+      </span><span class="nl">"pseudoTerminal"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"people"</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">],</span><span class="w">
+  </span><span class="nl">"placementConstraints"</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span><span class="w">
+  </span><span class="nl">"family"</span><span class="p">:</span><span class="w"> </span><span class="s2">"people"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"pidMode"</span><span class="p">:</span><span class="w"> </span><span class="s2">"task"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"requiresCompatibilities"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+    </span><span class="s2">"EC2"</span><span class="w">
+  </span><span class="p">],</span><span class="w">
+  </span><span class="nl">"networkMode"</span><span class="p">:</span><span class="w"> </span><span class="s2">"bridge"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"inferenceAccelerators"</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span><span class="w">
+  </span><span class="nl">"volumes"</span><span class="p">:</span><span class="w"> </span><span class="p">[]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+
+</span></code></pre></div></div>
+
+<h3 id="github-action-awsyml-설정">github action aws.yml 설정</h3>
+
+<p>그 후 github action을 클릭 후 ecs를 선택합니다.</p>
+
+<p><img src="https://images.velog.io/post-images/q00/f042e770-0c68-11ea-af87-0d4ce85d5d9f/image.png" alt="image.png" /></p>
+
+<p>aws.yml 파일에서 ecr repository name, region, ecs contiainer name 을 수정해주고
+repository setting tab에 secret에 secret 변수들을 설정해줍니다.
+어디 브랜치에 커밋이 되었거나 pr이 되었을때 CI/CD가 작동할 수 있도록 브랜치 설정도 해줍니다.</p>
+
+<p>aws.yml</p>
+<div class="language-yml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">on</span><span class="pi">:</span>
+  <span class="na">push</span><span class="pi">:</span>
+    <span class="na">branches</span><span class="pi">:</span>
+      <span class="pi">-</span> <span class="s">master</span>
+      <span class="pi">-</span> <span class="s">release*</span>
+  <span class="na">pull_request</span><span class="pi">:</span>
+    <span class="na">branches</span><span class="pi">:</span> 
+      <span class="pi">-</span> <span class="s">master</span>
+      <span class="pi">-</span> <span class="s">release</span>
+
+<span class="na">name</span><span class="pi">:</span> <span class="s">Deploy to Amazon ECS</span>
+
+<span class="na">jobs</span><span class="pi">:</span>
+  <span class="na">deploy</span><span class="pi">:</span>
+    <span class="na">name</span><span class="pi">:</span> <span class="s">Deploy</span>
+    <span class="na">runs-on</span><span class="pi">:</span> <span class="s">ubuntu-latest</span>
+
+    <span class="na">steps</span><span class="pi">:</span>
+    <span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">Checkout</span>
+      <span class="na">uses</span><span class="pi">:</span> <span class="s">actions/checkout@v1</span>
+
+    <span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">Configure AWS credentials</span>
+      <span class="na">uses</span><span class="pi">:</span> <span class="s">aws-actions/configure-aws-credentials@v1</span>
+      <span class="na">with</span><span class="pi">:</span>
+        <span class="na">aws-access-key-id</span><span class="pi">:</span> <span class="s">$</span>
+        <span class="na">aws-secret-access-key</span><span class="pi">:</span> <span class="s">$</span>
+        <span class="na">aws-region</span><span class="pi">:</span> <span class="s">ap-northeast-2</span>
+
+    <span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">Login to Amazon ECR</span>
+      <span class="na">id</span><span class="pi">:</span> <span class="s">login-ecr</span>
+      <span class="na">uses</span><span class="pi">:</span> <span class="s">aws-actions/amazon-ecr-login@v1</span>
+
+    <span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">Build, tag, and push image to Amazon ECR</span>
+      <span class="na">id</span><span class="pi">:</span> <span class="s">build-image</span>
+      <span class="na">env</span><span class="pi">:</span>
+        <span class="na">ECR_REGISTRY</span><span class="pi">:</span> <span class="s">$</span>
+        <span class="na">ECR_REPOSITORY</span><span class="pi">:</span> <span class="s">ECR리포지토리 이름</span>
+        <span class="na">IMAGE_TAG</span><span class="pi">:</span> <span class="s">$</span>
+      <span class="na">run</span><span class="pi">:</span> <span class="pi">|</span>
+        <span class="s"># Build a docker container and</span>
+        <span class="s"># push it to ECR so that it can</span>
+        <span class="s"># be deployed to ECS.</span>
+        <span class="s">docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .</span>
+        <span class="s">docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG</span>
+        <span class="s">echo "::set-output name=image::$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG"</span>
+    <span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">Fill in the new image ID in the Amazon ECS task definition</span>
+      <span class="na">id</span><span class="pi">:</span> <span class="s">task-def</span>
+      <span class="na">uses</span><span class="pi">:</span> <span class="s">aws-actions/amazon-ecs-render-task-definition@v1</span>
+      <span class="na">with</span><span class="pi">:</span>
+        <span class="na">task-definition</span><span class="pi">:</span> <span class="s">task-definition.json</span>
+        <span class="na">container-name</span><span class="pi">:</span> <span class="s">컨테이너이름</span>
+        <span class="na">image</span><span class="pi">:</span> <span class="s">$</span>
+
+    <span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">Deploy Amazon ECS task definition</span>
+      <span class="na">uses</span><span class="pi">:</span> <span class="s">aws-actions/amazon-ecs-deploy-task-definition@v1</span>
+      <span class="na">with</span><span class="pi">:</span>
+        <span class="na">task-definition</span><span class="pi">:</span> <span class="s">$</span>
+        <span class="na">service</span><span class="pi">:</span> <span class="s">서비스이름</span>
+        <span class="na">cluster</span><span class="pi">:</span> <span class="s">클러스터이름</span>
+        <span class="na">wait-for-service-stability</span><span class="pi">:</span> <span class="no">true</span>
+</code></pre></div></div>
+
+<p>다 완성하였습니다 commit push를 하게되면 CI/CD를 통해 Deploy가 될 것입니다.</p>
+<h3 id="deploy-완료">deploy 완료</h3>
+<p><img src="https://images.velog.io/post-images/q00/8b37e1d0-1043-11ea-a117-ab284b7f0de4/image.png" alt="image.png" /></p>
+
+<h3 id="주의할점">주의할점</h3>
+<p>ecs에서는 docker에 env 파일이 안먹어서 aws system manager를 이용하거나 container 에 NODE_ENV뿐만 아니라 다른 parameter도 추가 해야됩니다. 다음 포스팅은 aws system manager를 이용한 parameter 보관법을 올리겠습니다!</p>
+:ET

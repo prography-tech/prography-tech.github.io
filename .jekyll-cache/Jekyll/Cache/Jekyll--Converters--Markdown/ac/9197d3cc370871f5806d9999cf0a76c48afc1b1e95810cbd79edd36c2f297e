@@ -1,0 +1,537 @@
+I")�<blockquote>
+  <p>알고리즘 문제 풀이 by 신성환(github.com/blueStragglr)</p>
+</blockquote>
+
+<hr />
+
+<h4 id="2020카카오공채-문자열-압축">[2020카카오공채] 문자열 압축</h4>
+
+<p>(https://programmers.co.kr/learn/courses/30/lessons/60057)</p>
+
+<h4 id="문제-요약">문제 요약:</h4>
+
+<p>해당 문제는 임의의 string을 임의의 수의 substing으로 분해하여, 반복되는 substring을 압축함으로써 문자열을 짧게 압축하는 최적의 방법을 찾는 문제입니다. 압축은 아래와 같은 방법으로 수행합니다.</p>
+
+<blockquote>
+  <p>ababcdcdababcdcd의 경우 문자를 1개 단위로 자르면 전혀 압축되지 않지만, 2개 단위로 잘라서 압축한다면 2ab2cd2ab2cd로 표현할 수 있습니다. 다른 방법으로 8개 단위로 잘라서 압축한다면 2ababcdcd로 표현할 수 있으며, 이때가 가장 짧게 압축하여 표현할 수 있는 방법입니다.</p>
+</blockquote>
+
+<h4 id="풀이-해설">풀이 해설:</h4>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">math</span>
+
+<span class="k">def</span> <span class="nf">solution</span><span class="p">(</span><span class="n">s</span><span class="p">):</span>
+
+    <span class="c1">##### 가장 짧은 단어를 저장할 변수와, 특정 길이의 substring으로 압축한 문자열을 저장할 변수 초기화
+</span>    <span class="n">shortest</span> <span class="o">=</span> <span class="n">s</span>
+    <span class="n">shortenWord</span> <span class="o">=</span> <span class="n">s</span>
+    
+
+    <span class="c1">##### 1부터 string 길이 절반(홀수 길이일 경우 소수점 이하 올림)의 length를 갖는 subsrting으로
+</span>    <span class="c1">##### 압축한 결과를 비교하며 최소값을 저장하는 루프
+</span>    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">math</span><span class="o">.</span><span class="n">ceil</span><span class="p">((</span><span class="nb">len</span><span class="p">(</span><span class="n">s</span><span class="p">)</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span><span class="o">/</span><span class="mi">2</span><span class="p">)):</span>
+    
+
+	    	<span class="c1">##### getShortenWord(s,i)는 문자열 s를 길이 i의 substring으로 분해한 뒤 압축한 결과를 반환
+</span>        <span class="n">shortenWord</span> <span class="o">=</span> <span class="n">getShortenWord</span><span class="p">(</span><span class="n">s</span><span class="p">,</span><span class="n">i</span><span class="p">)</span>           
+        
+
+        <span class="c1">##### 압축 결과가 shortest에 저장된 string보다 짧은 경우 shortest를 갱신
+</span>        <span class="k">if</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">shortenWord</span><span class="p">)</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">shortest</span><span class="p">)):</span>
+            <span class="n">shortest</span><span class="o">=</span><span class="n">shortenWord</span>
+            
+    <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="n">shortest</span><span class="p">)</span> 
+</code></pre></div></div>
+
+<p>​</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">getShortenWord</span><span class="p">(</span><span class="n">originalStr</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">partSize</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+		<span class="c1">##### 분해된 조각들을 담을 array 초기화
+</span>    <span class="n">partialArr</span> <span class="o">=</span> <span class="p">[]</span>
+    
+    <span class="c1">##### 결과를 저장할 string 초기화
+</span>    <span class="n">shortenWord</span> <span class="o">=</span> <span class="s">''</span>
+    
+    <span class="c1">##### string을 정해진 크기로 잘라서 저장하는 루프
+</span>    <span class="c1">##### 전체 string 길이를 조각의 크기로 나눈 뒤 소숫점 이하 올림
+</span>    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">math</span><span class="o">.</span><span class="n">ceil</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">originalStr</span><span class="p">)</span><span class="o">/</span><span class="n">partSize</span><span class="p">)):</span>
+        <span class="c1">##### 읽기 편하게 줄을 바꾼 것으로, 실제로는 오작동할 수 있음. (원문은 띄어쓰기 x)
+</span>        <span class="c1">##### python의 parsing method를 이용하여 분해하여 저장
+</span>        <span class="n">partialArr</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+        	<span class="n">originalStr</span><span class="p">[</span><span class="n">i</span><span class="o">*</span><span class="n">partSize</span><span class="p">:</span><span class="nb">min</span><span class="p">((</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span><span class="o">*</span><span class="n">partSize</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">originalStr</span><span class="p">))]</span>
+        <span class="p">)</span>
+
+    <span class="c1">##### buffer에는 직전에 확인한 substring의 정보를 담음
+</span>    <span class="nb">buffer</span> <span class="o">=</span> <span class="s">''</span>
+    
+    <span class="c1">##### count에는 현재 substring이 반복된 횟수를 담음
+</span>    <span class="n">count</span> <span class="o">=</span> <span class="mi">1</span>
+    
+    <span class="c1">##### 분해된 모든 조각에 대해서 압축 프로세스 실행
+</span>    <span class="k">for</span> <span class="n">subStr</span> <span class="ow">in</span> <span class="n">partialArr</span><span class="p">:</span>
+    
+    		<span class="c1">##### 이전에 나왔던 substring이 반복된 경우 count만 업데이트 하고 넘어감
+</span>        <span class="k">if</span><span class="p">(</span><span class="nb">buffer</span> <span class="o">==</span> <span class="n">subStr</span><span class="p">):</span>
+            <span class="n">count</span> <span class="o">+=</span> <span class="mi">1</span> 
+            
+        <span class="c1">##### 이전에 나온 substring이 반복되지 않은 경우, 이전까지 반복된 정보를 shortenWord에 저장하고
+</span>        <span class="c1">##### 현재 substring에 대한 정보(buffer, count)를 업데이트 
+</span>        <span class="k">else</span><span class="p">:</span>
+            <span class="k">if</span><span class="p">(</span><span class="ow">not</span><span class="p">(</span><span class="nb">buffer</span><span class="o">==</span><span class="s">''</span><span class="p">)):</span>
+                <span class="k">if</span><span class="p">(</span><span class="n">count</span> <span class="o">==</span> <span class="mi">1</span><span class="p">):</span>
+                    <span class="n">count</span> <span class="o">=</span> <span class="s">''</span>
+                <span class="n">shortenWord</span> <span class="o">+=</span> <span class="nb">str</span><span class="p">(</span><span class="n">count</span><span class="p">)</span> <span class="o">+</span> <span class="nb">buffer</span>
+            <span class="n">count</span> <span class="o">=</span> <span class="mi">1</span>
+            <span class="nb">buffer</span> <span class="o">=</span> <span class="n">subStr</span>   
+            
+    <span class="c1">##### 마지막 substring은 위 루프에서 저장되지 않으므로 append를 종료하는 과정 수행
+</span>    <span class="c1">##### 마지막 substring이 반복된 것이 아닌 경우 substring(buffer)만 추가
+</span>    <span class="k">if</span><span class="p">(</span><span class="n">count</span><span class="o">==</span><span class="mi">1</span><span class="p">):</span>
+        <span class="n">shortenWord</span> <span class="o">+=</span> <span class="nb">buffer</span>
+    <span class="c1">##### 반복된 substring인 경우 count와 함께 추가 
+</span>    <span class="k">else</span><span class="p">:</span>
+        <span class="n">shortenWord</span> <span class="o">+=</span> <span class="nb">str</span><span class="p">(</span><span class="n">count</span><span class="p">)</span> <span class="o">+</span> <span class="nb">buffer</span>  
+        
+    <span class="k">return</span> <span class="n">shortenWord</span>
+</code></pre></div></div>
+
+<hr />
+
+<h4 id="문제-이름-search-insert-position">문제 이름: Search Insert Position</h4>
+
+<p>(https://leetcode.com/problems/search-insert-position/submissions/)</p>
+
+<h4 id="문제-요약-1">문제 요약:</h4>
+
+<p>Sorting 된 int Array와 target(int)이 주어진다. target이 포함되어있다면 target의 위치를 반환하고, 포함되어 있지 않다면 추가 후 sorting했을 때의 위치를 반환하라.</p>
+
+<h4 id="풀이-해설-1">풀이 해설:</h4>
+
+<p>Sol 1. Brute Force Algorithm ~ O(n)</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">Solution</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">searchInsert</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">nums</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">],</span> <span class="n">target</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+    		<span class="c1">##### index를 저장할 변수 선언
+</span>        <span class="n">index</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">nums</span><span class="p">:</span>
+        		<span class="c1">##### target보다 작은 element의 갯수를 count
+</span>            <span class="k">if</span><span class="p">(</span><span class="n">i</span> <span class="o">&lt;</span> <span class="n">target</span><span class="p">):</span>
+                <span class="n">index</span> <span class="o">+=</span> <span class="mi">1</span> 
+        <span class="c1">##### 갯수를 반환
+</span>        <span class="k">return</span> <span class="n">index</span>
+</code></pre></div></div>
+
+<p>Sol 2. Binary Search Algorithm ~ O(log n)</p>
+
+<hr />
+
+<h4 id="문제-이름-max-water-container">문제 이름: Max Water Container</h4>
+
+<p>(https://leetcode.com/problems/container-with-most-water/)</p>
+
+<h4 id="문제-요약-2">문제 요약:</h4>
+
+<p>양의 정수가 담긴 Array가 주어진다. 해당 Array를 comb모양의 그래프로 그렸을 때, 가장 많은 물을 담을 수 있는 두 개의 값 쌍을 찾아 그 넓이를 반환하라.</p>
+
+<p><img src="https://user-images.githubusercontent.com/44422495/67058168-980ab780-f18e-11e9-81f6-a7087d5ae9cd.png" alt="image" /></p>
+
+<h4 id="풀이-해설-2">풀이 해설:</h4>
+
+<p>Sol 1. Brute Force Algorithm ~ O(n^2)</p>
+
+<p><strong><em>TIME LIMIT EXCEEDED!!</em></strong></p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>class Solution:
+    def maxArea(self, height: List[int]) -&gt; int:
+    		##### Area의 최대값을 저장할 변수 선언
+        maxAreaVal = 0;
+        
+        ##### Array 두 개로 matrix를 만들어 각각의 값 중 최대값을 탐색
+        for i in range(len(height)):
+            for j in range(i+1, len(height)):
+                maxAreaVal = max(maxAreaVal, (min(height[i], height[j])*(j-i)))
+        return maxAreaVal;
+</code></pre></div></div>
+
+<p>결과값은 올바르게 계산되었지만 펑하고 터졌습니다.</p>
+
+<p><img src="https://user-images.githubusercontent.com/44422495/67058307-2ed77400-f18f-11e9-83aa-c8cd54cd2bca.png" alt="image" /></p>
+
+<p>Sol 2. Two Pointer Search(Greedy Algorithm) ~ O(n)</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">Solution</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">maxArea</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">height</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+    		<span class="c1">##### 맨 앞과 맨 뒤에 pointer로 사용할 변수 선언
+</span>        <span class="n">frontIndex</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">backIndex</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">height</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span>
+        
+        <span class="c1">##### 최댓값을 저장할 변수와 임시 저장 공간 변수 초기화
+</span>        <span class="n">maxVal</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+        <span class="n">maxBuffer</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+        
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">height</span><span class="p">)):</span>
+        		<span class="c1">##### 값을 계산해 봄 
+</span>            <span class="n">maxBuffer</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">height</span><span class="p">[</span><span class="n">frontIndex</span><span class="p">],</span> <span class="n">height</span><span class="p">[</span><span class="n">backIndex</span><span class="p">])</span> 
+												<span class="o">*</span><span class="p">(</span><span class="n">backIndex</span> <span class="o">-</span> <span class="n">frontIndex</span><span class="p">)</span>
+            <span class="c1">##### 둘 중 더 큰값을 저장
+</span>            <span class="n">maxVal</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">maxVal</span><span class="p">,</span> <span class="n">maxBuffer</span><span class="p">)</span>
+            <span class="c1">##### 앞쪽과 뒷쪽 값 중 크기가 작은 쪽의 index를 변화시킴(앞쪽은 +1, 뒷쪽은 -1)
+</span>            <span class="c1">##### *해당 알고리즘의 핵심. 뒤에서 따로 증명.*
+</span>            <span class="k">if</span> <span class="p">(</span><span class="n">height</span><span class="p">[</span><span class="n">frontIndex</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">height</span><span class="p">[</span><span class="n">backIndex</span><span class="p">]):</span>
+                <span class="n">frontIndex</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="k">else</span><span class="p">:</span> 
+                <span class="n">backIndex</span> <span class="o">-=</span> <span class="mi">1</span>
+                
+        <span class="c1">##### Loop에서 계산된 값들 중 최솟값을 반환
+</span>        <span class="k">return</span> <span class="n">maxVal</span><span class="p">;</span>
+                
+</code></pre></div></div>
+
+<h4 id="claim--앞쪽과-뒷쪽-값-중-크기가-작은-쪽의-index를-변화시키며-탐색-하면-올바르게-최댓값을-찾을-수-있는-것이-맞는가">CLAIM ~ <em>앞쪽과 뒷쪽 값 중 크기가 작은 쪽의 index를 변화시키며 탐색</em> 하면 올바르게 최댓값을 찾을 수 있는 것이 맞는가?</h4>
+
+<p>그림을 이용해 표현 해 보겠습니다. 길이 n의 array가 주어져 있을 때, <code class="highlighter-rouge">frontIndex = i, backIndex = j</code> 인 상황에서의 탐색은 다음과 같이 나타낼 수 있습니다.</p>
+
+<p><img src="https://user-images.githubusercontent.com/44422495/67058303-2848fc80-f18f-11e9-931d-b4a5eac013a4.png" alt="image" /></p>
+
+<p>이 경우, i를 변화시키며 탐색하게 됩니다. 이 방법을 통해 올바른 값을 찾을 수 있다는 것을 증명하기 위해서는 <strong><em>i를 이동하며 탐색했을 때 최대값 쌍을 누락하지 않는다</em></strong> 라는 것을 증명하면 됩니다. 해당 명제는 <strong><em>i를 이동하지 않고 탐색할 수 있는 모든 쌍 중에 최대값 쌍이 존재하지 않는다</em></strong> 라는 대우명제를 증명함으로써 증명할 수 있습니다.</p>
+
+<p>위 상황에서 i를 이동하지 않고 탐색하는 쌍은 <code class="highlighter-rouge">(i,i+1), (i,i+2), ... ,(i,j-1)</code> 입니다. 이 중 임의의 요소 <code class="highlighter-rouge">(i,k),   where i+1&lt;k&lt;j-1</code>의 넓이는 <code class="highlighter-rouge">min(h[i], h[k]) * (k-i)</code> 로 계산할 수 있습니다.</p>
+
+<p>이 때, <code class="highlighter-rouge">min(h[i], h[k]) &lt; h[i]</code> 이므로, 임의의 요소에 대해 넓이 최대값은 <code class="highlighter-rouge">h[i](k-i)</code> 이 되며, 탐색할 쌍의 정의로부터 <code class="highlighter-rouge">k-i&lt;j-i</code>이므로 <strong><em>i를 이동하지 않고 탐색할 수 있는 모든 쌍 중에는 <code class="highlighter-rouge">(i,j)</code> 쌍의 값보다 큰 값이 존재하지 않는다</em></strong>는 것을 알 수 있습니다.</p>
+
+<p>즉, i를 이동하지 않고 탐색할 수 있는 모든 쌍에 의한 값은  <code class="highlighter-rouge">(i,j)</code> 보다 작으므로, 최대값을 존재하지 않는다는 결론을 얻을 수 있습니다.</p>
+
+<p>두 알고리즘을 행렬을 이용해 비교 해 보면 조금 더 직관적인 이해를 할 수 있습니다.</p>
+
+<p><img src="https://user-images.githubusercontent.com/44422495/67138288-e5b11e00-f27b-11e9-8d5c-63437811a6e3.png" alt="image" /></p>
+
+<p>Brute Algorithm의 경우 모든 요소를 탐색하기 때문에 O(n^2)만큼의 결과값을 탐색해야 하는 반면, Two pointer algorithm은 명제 <strong><em>i를 이동하지 않고 탐색할 수 있는 모든 쌍 중에는 <code class="highlighter-rouge">(i,j)</code> 쌍의 값보다 큰 값이 존재하지 않는다</em></strong> 를 기반으로 한 행 혹은 한 열씩을 건너뛰기 때문에 한 열 혹은 한 행 중에 한개의 요소만 탐색하고 나머지를 배제할 수 있게 됩니다. 따라서 O(n) 시간 동안에 탐색을 마칠 수 있게 됩니다.</p>
+
+<hr />
+
+<h4 id="combination-sum">Combination Sum</h4>
+
+<p>(https://leetcode.com/problems/combination-sum/)</p>
+
+<h4 id="문제-요약-3">문제 요약:</h4>
+
+<p>해당 문제는 주어진 숫자 배열 내의 숫자들을 조합해 target의 값을 만들어낼 수 있는 모든 숫자쌍을 찾는 문제이다. 즉, 아래와 같은 input-ouput 쌍을 구하는 문제이다.</p>
+
+<blockquote>
+  <p>input: candidates = [2,3,6,7], target = 7,
+output: [ [7], [2,2,3] ]</p>
+
+  <p>즉, 2,3,6,7 중 임의의 숫자를 임의의 횟수만큼 사용하여 target을 만드는 방법을 탐색하는 문제입니다.</p>
+
+  <p>사용 횟수에는 제한이 없습니다.</p>
+</blockquote>
+
+<h4 id="풀이-해설-3">풀이 해설:</h4>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">Solution</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">combinationSum</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">candidates</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">],</span> <span class="n">target</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">]]:</span>
+        <span class="c1">##### 재귀함수를 실행하여 결과를 얻음.
+</span>        <span class="c1">##### 재귀함수에 필요한 변수가 기존 함수와 차이가 있어 별도 함수로 작성
+</span>        <span class="k">return</span> <span class="n">getAvailableCombination</span><span class="p">(</span><span class="n">candidates</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span> <span class="p">[])</span>
+        
+<span class="k">def</span> <span class="nf">getAvailableCombination</span><span class="p">(</span><span class="n">candidates</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">],</span> <span class="n">targetRemain</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">stacked</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">]]:</span>
+  
+  	<span class="c1">##### 값을 깎아 나가며 0이 되면 반환하고, 0 이하가 되면 케이스를 종료해버리도록 재귀를 구성.
+</span>    <span class="k">if</span><span class="p">(</span><span class="n">targetRemain</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">):</span>
+        <span class="k">return</span> <span class="p">[[]]</span>
+    <span class="k">if</span><span class="p">(</span><span class="n">targetRemain</span> <span class="o">==</span> <span class="mi">0</span><span class="p">):</span>
+        <span class="k">return</span> <span class="p">[</span><span class="n">stacked</span><span class="p">]</span>
+    
+    <span class="c1">##### 현재 loop에 담길 정답과, 임시로 스택을 쌓을 변수를 초기화
+</span>    <span class="n">answer</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">tmpStack</span> <span class="o">=</span> <span class="n">stacked</span><span class="p">[:]</span>
+    <span class="n">tmpStorage</span> <span class="o">=</span> <span class="p">[]</span>
+    
+    
+    <span class="k">for</span> <span class="n">candidate</span> <span class="ow">in</span> <span class="n">candidates</span><span class="p">:</span>
+        <span class="c1">##### input으로 들어온 stacked 변수가 비어있지 않고
+</span>        <span class="k">if</span><span class="p">(</span><span class="n">stacked</span><span class="o">!=</span><span class="p">[]):</span>
+            <span class="c1">##### candidate 요소가 stacked 변수의 마지막 값보다 작다면 그냥 패스.
+</span>            <span class="c1">##### 탐색한 요소를 중복해서 탐색하는 것을 방지하기 위함  
+</span>            <span class="k">if</span><span class="p">(</span><span class="n">candidate</span> <span class="o">&lt;</span> <span class="n">stacked</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]):</span>
+                <span class="k">continue</span>
+                
+        <span class="c1">##### tmpStack 변수에 candidate를 추가하여, 새로운 재귀함수 실행 후 결과 저장
+</span>        <span class="n">tmpStack</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">candidate</span><span class="p">)</span>
+        <span class="n">tmpStorage</span> <span class="o">=</span> <span class="n">getAvailableCombination</span><span class="p">(</span><span class="n">candidates</span><span class="p">,</span> <span class="n">targetRemain</span> <span class="o">-</span> <span class="n">candidate</span><span class="p">,</span> <span class="n">tmpStack</span><span class="p">)</span>
+        
+        <span class="c1">##### 반환받은 결과가 유효하다면 ([[]]가 아니라면) 정답에 추가
+</span>        <span class="k">if</span> <span class="n">tmpStorage</span> <span class="o">!=</span> <span class="p">[[]]:</span>
+            <span class="n">answer</span> <span class="o">+=</span> <span class="n">tmpStorage</span>
+            
+        <span class="c1">##### Shallow copy로 초기화. 
+</span>        <span class="n">tmpStack</span> <span class="o">=</span> <span class="n">stacked</span><span class="p">[:]</span>
+        
+    <span class="k">return</span> <span class="n">answer</span>
+   
+</code></pre></div></div>
+
+<p>해당 문제는 재귀함수를 이용하여 해결하였습니다. 피보나치 수열을 재귀함수로 해결하는 것과 비슷한 방식으로, target에서 candidate를 뺀 값으로 재귀함수를 다시 실행함으로써 문제를 해결하였습니다. 다만, 피보나치의 경우 항상 두 개의 재귀함수만 발생하므로 반복문 없이 재귀함수를 만들 수 있는 반면, 해당 문제의 경우 여러 가지 경우의 재귀함수를 모두 계산 해 주어야 하므로 상당한 공간복잡도(O(n^2logn))가 발생하게 됩니다.</p>
+
+<hr />
+
+<h4 id="word-ladder-ii">Word Ladder II</h4>
+
+<p>(https://leetcode.com/problems/word-ladder-ii/)</p>
+
+<h4 id="문제-요약-4">문제 요약:</h4>
+
+<p>해당 문제는 주어진 string 배열 내에서 한 글자씩만 바꾸며 hopping하여 시작 단어에서 끝 단어에 도착할 수 있는 최단경로를 찾는 문제이다. 아래 예를 살펴보자.</p>
+
+<blockquote>
+  <p>input:</p>
+
+  <p>hot
+cog
+[“hit”,”hat”,”lot”, “log”,”cog”]</p>
+
+  <p>output: [[ “hot”, “hit”, “lot”, “log”, “cog”], [ “hot”, “hat”, “lot”, “log”, “cog”]]</p>
+</blockquote>
+
+<p>즉, 위와 같이 한글자씩만 바꾸며 다른 단으로 넘어갔을 때, 최종 단어에 도착할 수 있는 가장 짧은 sequence만을 반환하는 문제이다. 여러 경로가 존재할 수 있으며, 경로가 존재하지 않는 경우에는 빈 array를 반환한다.</p>
+
+<h4 id="풀이-해설-4">풀이 해설:</h4>
+
+<p>*조금 깁니다!</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">Solution</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">findLadders</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">beginWord</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">endWord</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">wordList</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]]:</span>
+      
+        <span class="c1">##### 전처리 ~ Matrix 만들기
+</span>        <span class="c1">##### 단어간 이동 가능 여부를 쉽게 처리하기 위해 시작 단어를 맨 앞으로 가져오고 끝 단어를 맨 뒤로 보냅니다. 
+</span>        <span class="n">wordMatrix</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">if</span> <span class="n">beginWord</span> <span class="ow">in</span> <span class="n">wordList</span><span class="p">:</span>
+            <span class="n">wordList</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">beginWord</span><span class="p">)</span>    
+        <span class="n">wordList</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">beginWord</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">endWord</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">wordList</span><span class="p">:</span>
+            <span class="k">return</span> <span class="p">[]</span>
+        <span class="n">wordList</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">endWord</span><span class="p">)</span>
+        <span class="n">wordList</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">endWord</span><span class="p">)</span>        
+        
+        <span class="c1">##### 단어 사이즈를 미리 변수로 저장
+</span>        <span class="n">strSize</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">wordList</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+        
+        <span class="c1">##### 각 단어마다 다른 char 갯수를 저장하는 matrix 생성. 
+</span>        <span class="c1">##### M(i,j) = i번째 단어와 j번째 단어의 다른 char 갯수.
+</span>        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">wordList</span><span class="p">)):</span>
+            <span class="n">wordMatrix</span><span class="o">.</span><span class="n">append</span><span class="p">([])</span>
+            <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">wordList</span><span class="p">)):</span>
+                <span class="n">wordMatrix</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+                <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">strSize</span><span class="p">):</span>
+                    <span class="k">if</span> <span class="p">(</span><span class="n">wordList</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">k</span><span class="p">]</span> <span class="o">!=</span> <span class="n">wordList</span><span class="p">[</span><span class="n">j</span><span class="p">][</span><span class="n">k</span><span class="p">]):</span>
+                        <span class="n">wordMatrix</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
+                        
+        <span class="c1">##### 가능한 propagation을 저장할 변수 초기화.
+</span>        <span class="c1">##### 첫 단어에서 하나도 이동할 수 있는 경우가 없는 경우는 바로 return. 
+</span>        <span class="n">availablePropagation</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">availablePropagationBuffer</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">wordList</span><span class="p">)):</span>
+            <span class="k">if</span><span class="p">(</span><span class="n">wordMatrix</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="mi">1</span><span class="p">):</span>
+                <span class="n">availablePropagation</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="n">i</span><span class="p">])</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">availablePropagation</span> <span class="o">==</span> <span class="p">[]):</span>
+            <span class="k">return</span> <span class="p">[]</span>
+            
+        <span class="c1">##### 한 번 hoping에 바로 도달할 수 있는 경우에도, 이후 loop를 바로 지나가도록 설정해줌. 
+</span>        <span class="n">valueFounded</span> <span class="o">=</span> <span class="bp">False</span>
+        <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">availablePropagation</span><span class="p">:</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">wordList</span><span class="p">[</span><span class="n">item</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span> <span class="o">==</span> <span class="n">endWord</span><span class="p">):</span>
+                <span class="n">valueFounded</span> <span class="o">=</span> <span class="bp">True</span>
+                <span class="n">availablePropagation</span> <span class="o">=</span> <span class="p">[</span><span class="n">item</span><span class="p">]</span>
+                <span class="k">break</span>
+        
+        <span class="c1">##### Matrix를 n번 hoping하면서 endword에 도달하는 경우 바로 종료. 
+</span>        <span class="c1">##### 계속해서 가능한 경로들을 쌓아나가는 방식으로 loop를 돌림. 
+</span>        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">wordList</span><span class="p">)):</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">valueFounded</span> <span class="o">==</span> <span class="bp">True</span><span class="p">):</span>
+                <span class="k">break</span>
+            <span class="k">for</span> <span class="n">propIndex</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">availablePropagation</span><span class="p">)):</span>
+                <span class="n">propItem</span> <span class="o">=</span> <span class="n">availablePropagation</span><span class="p">[</span><span class="n">propIndex</span><span class="p">]</span>
+                <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">wordList</span><span class="p">)):</span>
+                    <span class="k">if</span><span class="p">(</span><span class="n">wordMatrix</span><span class="p">[</span><span class="n">propItem</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]][</span><span class="n">j</span><span class="p">]</span><span class="o">==</span><span class="mi">1</span> <span class="ow">and</span> <span class="p">(</span><span class="n">j</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">propItem</span><span class="p">)</span> <span class="ow">and</span> <span class="n">j</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">):</span>
+                        <span class="n">availablePropagationBuffer</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">propItem</span> <span class="o">+</span> <span class="p">[</span><span class="n">j</span><span class="p">])</span>
+                        <span class="k">if</span> <span class="p">(</span><span class="n">wordList</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">==</span> <span class="n">endWord</span><span class="p">):</span>
+                            <span class="n">valueFounded</span> <span class="o">=</span> <span class="bp">True</span>
+            <span class="n">availablePropagation</span> <span class="o">=</span> <span class="n">availablePropagationBuffer</span>
+            <span class="n">availablePropagationBuffer</span> <span class="o">=</span> <span class="p">[]</span>
+            
+        <span class="n">answer</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">answerSet</span> <span class="o">=</span> <span class="p">[]</span>
+        
+        <span class="c1">##### 최단경로만을 남기고 나머지 탐색중이던 가능성들을 삭제. 
+</span>        <span class="k">for</span> <span class="n">indexItem</span> <span class="ow">in</span> <span class="n">availablePropagation</span><span class="p">:</span>
+            <span class="k">if</span><span class="p">(</span><span class="n">wordList</span><span class="p">[</span><span class="n">indexItem</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]]</span> <span class="o">==</span> <span class="n">endWord</span><span class="p">):</span>
+                <span class="n">answer</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">beginWord</span><span class="p">)</span>
+                <span class="k">for</span> <span class="n">wordIndex</span> <span class="ow">in</span> <span class="n">indexItem</span><span class="p">:</span>
+                    <span class="n">answer</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">wordList</span><span class="p">[</span><span class="n">wordIndex</span><span class="p">])</span>
+            <span class="k">if</span><span class="p">(</span><span class="n">answer</span> <span class="o">!=</span> <span class="p">[]):</span>
+                <span class="n">answerSet</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">answer</span><span class="p">)</span>
+                <span class="n">answer</span> <span class="o">=</span> <span class="p">[]</span>
+            
+        <span class="k">return</span> <span class="n">answerSet</span>
+</code></pre></div></div>
+
+<p>해당 문제는 Matrix를 구성한 뒤, 가능한 pathway들을 모두 탐색하다 마지막 단어에 도달하는 경우 종료하도록 구성하였다. 탐색 자체는 O(n)에 마무리할 수 있지만 Matrix를 생성하는 탐색이 O(n^2)를 요구하게 된다.</p>
+
+<hr />
+
+<h4 id="trapping-rain-water-hard">Trapping Rain Water (HARD)</h4>
+
+<p>(https://leetcode.com/problems/trapping-rain-water/)</p>
+
+<h4 id="문제-요약-5">문제 요약:</h4>
+
+<p>해당 문제는 주어진 positive integer set을 block 형태로 쌓았을 때, trap되는 물의 총량을 구하는 문제이다. 아래와 같은 입력 예시를 생각해 보자.</p>
+
+<blockquote>
+  <p>Input: [0,1,0,2,1,0,1,3,2,1,2,1]</p>
+
+  <p>위와 같이 input이 주어지면, 아래와 같이 물이 담길 것으로 예상할 수 있다.</p>
+
+  <p><img src="https://assets.leetcode.com/uploads/2018/10/22/rainwatertrap.png" alt="img" /></p>
+
+  <p>output: 6</p>
+</blockquote>
+
+<h4 id="풀이-해설-5">풀이 해설:</h4>
+
+<h4 id="solution-1-stack">Solution 1. Stack</h4>
+
+<h5 id="time-on-space-on">Time: O(n), Space: O(n)</h5>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">Solution</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">trap</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">height</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+        <span class="n">trapped</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">height</span><span class="p">)</span>
+        <span class="n">heightStack</span> <span class="o">=</span> <span class="p">[]</span>
+        
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">height</span><span class="p">)):</span>
+            <span class="c1">##### Stack이 비어있다면 Stack에 추가
+</span>            <span class="k">if</span> <span class="n">heightStack</span> <span class="o">==</span> <span class="p">[]:</span>
+                <span class="n">heightStack</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="n">i</span><span class="p">,</span><span class="n">height</span><span class="p">[</span><span class="n">i</span><span class="p">]])</span>
+                
+            <span class="c1">##### Stack이 차있다면
+</span>            <span class="k">else</span><span class="p">:</span>
+              	<span class="c1">##### Stack의 첫 칸에는 Fragement에서 항상 가장 큰 값이 옴.
+</span>                <span class="c1">##### 만약 새로 탐색한 값이 이전에 있던 가장 큰 값보다 크다면 해당 fragment 전체에 물을 채우고
+</span>                <span class="c1">##### Stack을 갱신 (마지막으로 탐색한 요소만 남김)
+</span>                <span class="k">if</span> <span class="n">heightStack</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="n">height</span><span class="p">[</span><span class="n">i</span><span class="p">]:</span>
+                    <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">heightStack</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">i</span><span class="p">):</span>
+                        <span class="n">trapped</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">heightStack</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">height</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> 
+                    <span class="n">heightStack</span> <span class="o">=</span> <span class="p">[[</span><span class="n">i</span><span class="p">,</span><span class="n">height</span><span class="p">[</span><span class="n">i</span><span class="p">]]]</span>
+                <span class="k">else</span><span class="p">:</span>  
+                    <span class="c1">##### 바로 이전 요소보다 작은 값이라면 Stack에 추가함
+</span>                    <span class="k">if</span><span class="p">((</span><span class="n">heightStack</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">height</span><span class="p">[</span><span class="n">i</span><span class="p">])</span> <span class="ow">and</span> <span class="p">((</span><span class="n">heightStack</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="n">i</span><span class="p">)</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">)):</span>
+                        <span class="n">heightStack</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="n">i</span><span class="p">,</span><span class="n">height</span><span class="p">[</span><span class="n">i</span><span class="p">]])</span>
+                    <span class="c1">##### 그렇지 않다면, 탐색값보다 큰 요소가 나올 때 까지 Backtracking
+</span>                    <span class="c1">##### 발견하면 탐색을 중단하고 물을 채운 뒤 Stack에서 물에 잠긴 요소를 제거
+</span>                    <span class="k">elif</span><span class="p">(</span><span class="n">height</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">height</span><span class="p">[</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">]):</span>   
+                        <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">heightStack</span><span class="p">))[::</span><span class="o">-</span><span class="mi">1</span><span class="p">]:</span>
+                            <span class="k">if</span> <span class="p">(</span><span class="n">heightStack</span><span class="p">[</span><span class="n">j</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="n">height</span><span class="p">[</span><span class="n">i</span><span class="p">]):</span>
+                                <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">heightStack</span><span class="p">[</span><span class="n">j</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">i</span><span class="p">):</span>
+                                    <span class="k">if</span><span class="p">(</span><span class="n">trapped</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">height</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">-</span> <span class="n">height</span><span class="p">[</span><span class="n">k</span><span class="p">]):</span>
+                                        <span class="n">trapped</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="n">height</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">-</span> <span class="n">height</span><span class="p">[</span><span class="n">k</span><span class="p">]</span>
+                                <span class="k">del</span> <span class="n">heightStack</span><span class="p">[</span><span class="n">j</span><span class="o">+</span><span class="mi">1</span><span class="p">:]</span>
+                                <span class="k">break</span>
+        <span class="k">return</span> <span class="p">(</span><span class="nb">sum</span><span class="p">(</span><span class="n">trapped</span><span class="p">))</span>
+
+</code></pre></div></div>
+
+<h4 id="solution-2-dynamic-programming">Solution 2. Dynamic Programming</h4>
+
+<p>홈페이지에 있는 사진으로 갈음합니다.</p>
+
+<h5 id="time-on-space-on-1">Time: O(n), Space: O(n)</h5>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">Solution</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">trap</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">height</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+        <span class="n">leftMax</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">height</span><span class="p">)</span>
+        <span class="n">rightMax</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">height</span><span class="p">)</span>
+        <span class="n">maxValue</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">answer</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">height</span><span class="p">)):</span>
+            <span class="n">maxValue</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">maxValue</span><span class="p">,</span> <span class="n">height</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+            <span class="n">leftMax</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">maxValue</span>
+
+        <span class="n">maxValue</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">height</span><span class="p">))[::</span><span class="o">-</span><span class="mi">1</span><span class="p">]:</span>
+            <span class="n">maxValue</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">maxValue</span><span class="p">,</span> <span class="n">height</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+            <span class="n">rightMax</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">maxValue</span>
+            <span class="n">answer</span> <span class="o">+=</span> <span class="nb">min</span><span class="p">(</span><span class="n">rightMax</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">leftMax</span><span class="p">[</span><span class="n">i</span><span class="p">])</span> <span class="o">-</span> <span class="n">height</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+        
+        <span class="k">return</span> <span class="n">answer</span>
+
+</code></pre></div></div>
+
+<p><img src="https://leetcode.com/problems/trapping-rain-water/Figures/42/trapping_rain_water.png" alt="Dynamic programming" /></p>
+
+<hr />
+
+<h3 id="asteroid-collision">Asteroid Collision</h3>
+
+<p>https://leetcode.com/problems/asteroid-collision/</p>
+
+<h4 id="문제-요약-6">문제 요약:</h4>
+
+<p>해당 문제는 순서대로 위치한, 각기 다른 크기의 소행성들이 시간이 충분히 지난 후 어떻게 될지에 대한 문제이다. 주어지는 integer array는 소행성의 크기이며, 부호는 움직이는 방향이다. 작은 소행성이 큰 소행성과 부딪히면 작은 소행성이 소멸하며, 같은 크기의 소행성이 충돌시 두 개 모두 소멸한다.</p>
+
+<blockquote>
+  <p>Input: [5,10,-5]</p>
+
+  <p>5, 10의 소행성은 같은 방향으로 진행하지 않아 남아있고, -5의 소행성은 10의 소행성과 충돌하여 파괴되므로 결과적으로 5와 10만 남는다.</p>
+
+  <p>output: [5,10]</p>
+</blockquote>
+
+<h4 id="풀이-해설-6">풀이 해설:</h4>
+
+<h4 id="solution-1-stack-1">Solution 1. Stack</h4>
+
+<h5 id="time-on-space-o1">Time: O(n), Space: O(1)</h5>
+
+<p>Concept ~ Stack에 하나씩 소행성을 추가하며, 왼쪽(negative)으로 진행하는 소행성이 등장하는 경우 stack의 소행성들과 충돌하는 것으로 간주하여 폭발하는 소행성을 제거한다. 만일 왼쪽으로 진행하는 소행성이 stack에 왼쪽으로 진행하는 소행성만 남을 때 까지 소행성을 파괴한다면, 해당 소행성을 stack에 추가한다.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">Solution</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">asteroidCollision</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">asteroids</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">]:</span>
+        <span class="n">answerStack</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">asteroid</span> <span class="ow">in</span> <span class="n">asteroids</span><span class="p">:</span>
+            <span class="c1">##### Stack이 빈 경우, 소행성을 추가.
+</span>            <span class="k">if</span> <span class="n">answerStack</span> <span class="o">==</span> <span class="p">[]:</span>
+                <span class="n">answerStack</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">asteroid</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="c1">#### 탐색한 소행성이 왼쪽으로 진행하고 있다면
+</span>                <span class="k">if</span> <span class="n">asteroid</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+                  	<span class="c1">##### Stack을 하나씩 탐색하며
+</span>                    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">answerStack</span><span class="p">))[::</span><span class="o">-</span><span class="mi">1</span><span class="p">]:</span>
+                      	<span class="c1">##### 왼쪽으로 진행하는 소행성만 스택에 남았다면 그냥 추가하고
+</span>                        <span class="k">if</span> <span class="p">(</span><span class="n">answerStack</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">):</span>
+                            <span class="n">answerStack</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">asteroid</span><span class="p">)</span>
+                            <span class="k">break</span>
+                        <span class="c1">##### 그렇지 않다면
+</span>                        <span class="k">else</span><span class="p">:</span>
+                            <span class="c1">##### 탐색중인 소행성보다 작은 소행성을 하나씩 파괴하며
+</span>                            <span class="k">if</span> <span class="p">(</span><span class="n">answerStack</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">+</span> <span class="n">asteroid</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+                                <span class="k">del</span> <span class="n">answerStack</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+                                <span class="c1">##### 모두 파괴되었다면 Stack에 추가.
+</span>                                <span class="k">if</span> <span class="n">i</span><span class="o">==</span><span class="mi">0</span><span class="p">:</span>
+                                    <span class="n">answerStack</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">asteroid</span><span class="p">)</span>
+                                    
+                          	<span class="c1">##### 만약 크기가 같은 경우에는 둘 다 파괴하기만 하고 루프 종료.
+</span>                            <span class="k">elif</span> <span class="p">(</span><span class="n">answerStack</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">+</span> <span class="n">asteroid</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                                <span class="k">del</span> <span class="n">answerStack</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+                                <span class="k">break</span>
+                                
+                            <span class="c1">##### 왼쪽으로 진행하는 소행성이 더 작은 경우에는 바로 파괴하고 루프 종료.
+</span>                            <span class="k">else</span><span class="p">:</span>
+                                <span class="k">break</span>
+                <span class="k">else</span><span class="p">:</span>                
+                    <span class="n">answerStack</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">asteroid</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">answerStack</span>
+                                
+</code></pre></div></div>
+
+:ET
