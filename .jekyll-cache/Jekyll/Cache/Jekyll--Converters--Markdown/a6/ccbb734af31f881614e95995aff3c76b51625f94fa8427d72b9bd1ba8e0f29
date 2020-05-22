@@ -1,0 +1,137 @@
+I"TE<h1 id="1-들어가며"><strong>1. 들어가며</strong></h1>
+
+<p>moment js는 시간이 포함된 데이터를 받아 조작해야 할 경우 사용하기 좋은 라이브러리입니다.</p>
+
+<p>저의 경우 차트를 그릴 때 서버에서 한 시간 마다의 판매량, 매출과 같은 시간별 정보를 넘겨주었는데요.</p>
+
+<ul>
+  <li>날짜별 데이터를 뽑고 싶다.</li>
+  <li>특정 기간 동안의 데이터를 뽑고 싶다.</li>
+</ul>
+
+<p>와 같은 니즈가 있었습니다.</p>
+
+<p>자바스크립트에는 기본적으로 Date 객체가 있고 Date 객체에 내장된 다양한 함수들이 있는데요.</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">const</span> <span class="nx">now</span> <span class="o">=</span> <span class="k">new</span> <span class="nb">Date</span><span class="p">()</span> <span class="nx">now</span><span class="p">.</span><span class="nx">toISOString</span><span class="p">().</span><span class="nx">slice</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">10</span><span class="p">)</span> <span class="c1">// "2019-10-27" </span>
+<span class="kd">const</span> <span class="nx">current</span> <span class="o">=</span> <span class="k">new</span> <span class="nb">Date</span><span class="p">()</span> <span class="nx">current</span><span class="p">.</span><span class="nx">toISOString</span><span class="p">()</span> <span class="c1">// "2019-10-27T08:30:26.284Z"</span>
+</code></pre></div></div>
+
+<p>사실 Date 객체를 이용해서 시간 데이터를 다루어 무언가를 해본 경험이 없습니다. Moment js 가 최고야!라는 이야기를 듣고.. 팔랑귀인 저는 묻지도 따지지도 않고 moment js를 사용했답니다ㅎ</p>
+
+<p>오늘은 Moment js에서 제가 사용한 몇 가지 함수들을 소개하고자 합니다.</p>
+
+<h1 id="2-포멧팅-하기"><strong>2. 포멧팅 하기</strong></h1>
+
+<h2 id="21-momentformat"><strong>2.1 moment.format()</strong></h2>
+
+<p>moment js에서는 Date 객체 대신 Moment라는 객체를 사용합니다.</p>
+
+<p>날짜를 콘솔에 출력하기 위해서는 Moment 객체를 format()이라는 함수를 사용해주어야 합니다.</p>
+
+<p>moment js의 인자로는 굉장히 다양한 타입이 들어갈 수 있습니다. 실제로 회사에서 사용할 때는 인자로 string만 넣었는데요. 공부해보니 이렇게 format까지 같이 넣을 수도 있네요.</p>
+
+<ol>
+  <li>첫 번째 인자와 같은 format은 넘길 필요가 없는 것 같습니다.</li>
+  <li>‘12-24-2018’처럼 개떡같이 넣어도 찰떡같이 알아듣네요.</li>
+  <li>두 번째 인자로 format을 같이 넣는 경우. format() 함수와 차이점은 출력 형태이네요.
+    <ul>
+      <li>조금 더 구체적으로 설명하면 두 번째 인자로 format을 넣으면 moment 객체의 d가 바뀌고, .format()는 출력 형태를 어떻게 보여줄지를 변경한다고 할 수 있습니다.</li>
+    </ul>
+  </li>
+</ol>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">moment</span><span class="p">(</span><span class="dl">'</span><span class="s1">2018-12-24</span><span class="dl">'</span><span class="p">,</span><span class="dl">"</span><span class="s2">MM-DD-YYYY</span><span class="dl">"</span><span class="p">).</span><span class="nx">format</span><span class="p">())</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">moment</span><span class="p">(</span><span class="dl">'</span><span class="s1">12-24-2018</span><span class="dl">'</span><span class="p">,</span><span class="dl">"</span><span class="s2">MM-DD-YYYY</span><span class="dl">"</span><span class="p">).</span><span class="nx">format</span><span class="p">())</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">moment</span><span class="p">(</span><span class="dl">'</span><span class="s1">2018-12-24</span><span class="dl">'</span><span class="p">,</span><span class="dl">"</span><span class="s2">YYYY-MM</span><span class="dl">"</span><span class="p">).</span><span class="nx">format</span><span class="p">())</span> 
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">moment</span><span class="p">(</span><span class="dl">'</span><span class="s1">2018-12-24</span><span class="dl">'</span><span class="p">).</span><span class="nx">format</span><span class="p">(</span><span class="dl">"</span><span class="s2">YYYY-MM</span><span class="dl">"</span><span class="p">))</span>
+    
+    <span class="nx">Invalid</span> <span class="nx">date</span> 
+    <span class="mi">2018</span><span class="o">-</span><span class="mi">12</span><span class="o">-</span><span class="mi">24</span><span class="nx">T00</span><span class="p">:</span><span class="mi">00</span><span class="p">:</span><span class="mi">00</span><span class="o">+</span><span class="mi">09</span><span class="p">:</span><span class="mi">00</span> 
+    <span class="mi">2018</span><span class="o">-</span><span class="mi">12</span><span class="o">-</span><span class="mi">01</span><span class="nx">T00</span><span class="p">:</span><span class="mi">00</span><span class="p">:</span><span class="mi">00</span><span class="o">+</span><span class="mi">09</span><span class="p">:</span><span class="mi">00</span> 
+</code></pre></div></div>
+
+<h1 id="3-시간-데이터-조작하기"><strong>3. 시간 데이터 조작하기</strong></h1>
+
+<p>날짜별 데이터를 뽑을 때는 이런 식으로 filter 와 같이 사용하였습니다.</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    <span class="kd">const</span> <span class="nx">dayTimeData</span> <span class="o">=</span> <span class="nx">timesData</span><span class="p">.</span><span class="nx">filter</span><span class="p">(</span><span class="nx">timeData</span> <span class="o">=&gt;</span> <span class="nx">moment</span><span class="p">(</span><span class="nx">timeData</span><span class="p">.</span><span class="nx">statAt</span><span class="p">).</span><span class="nx">startOf</span><span class="p">(</span><span class="dl">'</span><span class="s1">day</span><span class="dl">'</span><span class="p">).</span><span class="nx">isSame</span><span class="p">(</span><span class="nx">dayTime</span><span class="p">,</span> <span class="dl">'</span><span class="s1">day</span><span class="dl">'</span><span class="p">))</span> 
+    <span class="kd">const</span> <span class="nx">weekTimeData</span> <span class="o">=</span> <span class="nx">timesData</span><span class="p">.</span><span class="nx">filter</span><span class="p">(</span><span class="nx">timeData</span> <span class="o">=&gt;</span> <span class="nx">moment</span><span class="p">(</span><span class="nx">timeData</span><span class="p">.</span><span class="nx">statAt</span><span class="p">).</span><span class="nx">isSameOrAfter</span><span class="p">(</span><span class="nx">lastWeek</span><span class="p">)</span> <span class="o">&amp;&amp;</span> <span class="nx">moment</span><span class="p">(</span><span class="nx">timeData</span><span class="p">.</span><span class="nx">statAt</span><span class="p">).</span><span class="nx">isBefore</span><span class="p">(</span><span class="nx">today</span><span class="p">))</span>
+</code></pre></div></div>
+
+<p>어제 데이터를 뽑을 때는</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    <span class="nx">moment</span><span class="p">().</span><span class="nx">subtract</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="dl">'</span><span class="s1">days</span><span class="dl">'</span><span class="p">).</span><span class="nx">startOf</span><span class="p">(</span><span class="dl">'</span><span class="s1">day</span><span class="dl">'</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>조금 더 구체적으로 각 메서드를 확인해 볼까요?</p>
+
+<p>시작을 00시로 맞춰줄 때 사용하였습니다.</p>
+
+<h2 id="31-momentstartofstring"><strong>3.1 moment().startOf(‘String’)</strong></h2>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    <span class="kd">const</span> <span class="nx">today</span> <span class="o">=</span> <span class="nx">moment</span><span class="p">().</span><span class="nx">startOf</span><span class="p">(</span><span class="dl">'</span><span class="s1">day</span><span class="dl">'</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>특정 날짜의 데이터를 뽑고 싶을 때 startOf를 사용하였습니다.</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    <span class="kd">const</span> <span class="nx">dayTimeData</span> <span class="o">=</span> <span class="nx">timesData</span><span class="p">.</span><span class="nx">filter</span><span class="p">(</span><span class="nx">timeData</span> <span class="o">=&gt;</span> <span class="nx">moment</span><span class="p">(</span><span class="nx">timeData</span><span class="p">.</span><span class="nx">statAt</span><span class="p">).</span><span class="nx">startOf</span><span class="p">(</span><span class="dl">'</span><span class="s1">day</span><span class="dl">'</span><span class="p">).</span><span class="nx">isSame</span><span class="p">(</span><span class="nx">dayTime</span><span class="p">,</span> <span class="dl">'</span><span class="s1">day</span><span class="dl">'</span><span class="p">))</span>
+</code></pre></div></div>
+
+<h2 id="32-momentadd--subtract"><strong>3.2 moment().add , subtract</strong></h2>
+
+<p>저는 특정 날짜의 데이터를 가져오는데 사용해서 그런지 add, subtract 함수는 거의 startOf와 함께 사용하였습니다.</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    <span class="kd">const</span> <span class="nx">yesterday</span> <span class="o">=</span> <span class="nx">moment</span><span class="p">().</span><span class="nx">subtract</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="dl">'</span><span class="s1">days</span><span class="dl">'</span><span class="p">).</span><span class="nx">startOf</span><span class="p">(</span><span class="dl">'</span><span class="s1">day</span><span class="dl">'</span><span class="p">)</span> 
+    <span class="c1">// 차트의 시간축에서 첫날과 마지막 날을 지정할 때 사용한 로직입니다. </span>
+    <span class="kd">const</span> <span class="nx">dayAxis</span> <span class="o">=</span> <span class="nx">makeTimeAxis</span><span class="p">(</span><span class="dl">'</span><span class="s1">day</span><span class="dl">'</span><span class="p">,</span> <span class="kc">null</span><span class="p">,</span> <span class="nx">moment</span><span class="p">().</span><span class="nx">add</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="dl">'</span><span class="s1">days</span><span class="dl">'</span><span class="p">).</span><span class="nx">startOf</span><span class="p">(</span><span class="dl">'</span><span class="s1">day</span><span class="dl">'</span><span class="p">))</span>
+</code></pre></div></div>
+
+<h2 id="33-momentdiff"><strong>3.3 moment().diff</strong></h2>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    <span class="kd">const</span> <span class="nx">term</span> <span class="o">=</span> <span class="nx">today</span><span class="p">.</span><span class="nx">diff</span><span class="p">(</span><span class="nx">lastWeek</span><span class="p">,</span> <span class="dl">'</span><span class="s1">days</span><span class="dl">'</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>날짜를 차이로 알고 싶은 경우 ‘days’를 두 번째 인자로 넣어주면 됩니다.</p>
+
+<h2 id="34-momentissame--isbefore-isbetween"><strong>3.4 moment().isSame , isBefore, isBetween</strong></h2>
+
+<p>특정 시간을 뽑아낼 때 사용하는 함수입니다.</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    <span class="kd">const</span> <span class="nx">term</span> <span class="o">=</span> <span class="nx">today</span><span class="p">.</span><span class="nx">diff</span><span class="p">(</span><span class="nx">lastWeek</span><span class="p">,</span> <span class="dl">'</span><span class="s1">days</span><span class="dl">'</span><span class="p">)</span>
+    <span class="kd">const</span> <span class="nx">dataByDate</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="c1">// 7일간의 데이터</span>
+    <span class="kd">const</span> <span class="nx">weekTimeData</span> <span class="o">=</span> <span class="nx">timesData</span><span class="p">.</span><span class="nx">filter</span><span class="p">(</span><span class="nx">timeData</span> <span class="o">=&gt;</span> <span class="nx">moment</span><span class="p">(</span><span class="nx">timeData</span><span class="p">.</span><span class="nx">statAt</span><span class="p">).</span><span class="nx">isSameOrAfter</span><span class="p">(</span><span class="nx">lastWeek</span><span class="p">)</span> <span class="o">&amp;&amp;</span> <span class="nx">moment</span><span class="p">(</span><span class="nx">timeData</span><span class="p">.</span><span class="nx">statAt</span><span class="p">).</span><span class="nx">isBefore</span><span class="p">(</span><span class="nx">today</span><span class="p">))</span>
+
+    <span class="c1">// 날짜별 24시간 데이터배열 수집</span>
+    <span class="k">for</span> <span class="p">(</span><span class="kd">let</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">weekTimeData</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span> <span class="nx">i</span> <span class="o">+=</span> <span class="mi">24</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nx">dataByDate</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nx">weekTimeData</span><span class="p">.</span><span class="nx">slice</span><span class="p">(</span><span class="nx">i</span><span class="p">,</span> <span class="nx">i</span> <span class="o">+</span> <span class="mi">24</span><span class="p">))</span>
+    <span class="p">}</span>
+    <span class="c1">// 일주일간의 데이터 시간별(24) 수집</span>
+    <span class="k">for</span> <span class="p">(</span><span class="kd">let</span> <span class="nx">j</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">j</span> <span class="o">&lt;</span> <span class="nx">term</span><span class="p">;</span> <span class="nx">j</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">for</span> <span class="p">(</span><span class="kd">let</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="mi">24</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+            <span class="nx">weekActiveRate</span><span class="p">[</span><span class="nx">i</span><span class="p">]</span> <span class="o">+=</span> <span class="nx">dataByDate</span><span class="p">[</span><span class="nx">j</span><span class="p">][</span><span class="nx">i</span><span class="p">].</span><span class="nx">activeTime</span> <span class="o">/</span> <span class="nx">dataByDate</span><span class="p">[</span><span class="nx">j</span><span class="p">][</span><span class="nx">i</span><span class="p">].</span><span class="nx">deployTime</span> <span class="o">/</span> <span class="nx">term</span> <span class="o">*</span> <span class="mi">100</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+</code></pre></div></div>
+
+<h1 id="4-그-외에">4. <strong>그 외에</strong></h1>
+
+<ul>
+  <li>moment 라이브러리가 아니라 moment-timezone 을 깔았는데 moment의 내장 함수를 다 사용할 수 있다고 합니다.
+    <ul>
+      <li><a href="https://stackoverflow.com/questions/49729646/using-both-moment-and-moment-tz__"><strong>참고링크</strong></a></li>
+    </ul>
+  </li>
+  <li>월별 시작, 마지막 일 찾기
+    <ul>
+      <li><a href="https://stackoverflow.com/questions/39267623/moment-js-get-first-and-last-day-of-current-month"><strong>참고링크</strong></a></li>
+    </ul>
+  </li>
+  <li>moment 라이브러리를 사용하면 자동으로 서울 시간으로 자동으로 맞춰줍니다.</li>
+</ul>
+
+<h1 id="5-마무리하며">5<strong>. 마무리하며</strong></h1>
+
+<p>다 알려고 하지 말고, 왜 이렇게 해야 하는지 의심하지 말고 요구하는 형식에 딱 맞춰서 사용하는 법을 배워야 시간 내에 해결할 수 있을 것 같다는 생각이 드네요 ㅠ 저는 일할 땐 너무 궁금해하면 안 되겠어요.</p>
+:ET

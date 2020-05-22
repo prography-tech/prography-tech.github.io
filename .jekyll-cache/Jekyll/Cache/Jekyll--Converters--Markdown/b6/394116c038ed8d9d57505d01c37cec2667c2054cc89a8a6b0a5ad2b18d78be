@@ -1,0 +1,319 @@
+I"�=<h2 id="docker">Docker</h2>
+
+<h6 id="세줄요약">세줄요약</h6>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>- 컨테이너 기반 오픈소스 가상화 플랫폼
+- 컴퓨터 성능을 효율적으로 사용할 수 있다
+- 배포 관리에 편하다
+</code></pre></div></div>
+
+<p><img src="https://live.staticflickr.com/7336/14098888813_1047e39f08.jpg" alt="docker logo" /></p>
+
+<p>기본적으로, 프로젝트를 진행하다보면 모든 사람들이 같은 환경을 가지고 있지 않다. 누구는 윈도우 / 누구는 맥 등등 ! 각 컴퓨터에 동일한 버전으로 설치를 했다고 할지라도, 뭔가 요상하게 깨지는 일들도 경험해 본적이 있을 것이다. 이런 고역을 피하기 위해 <strong>Docker</strong> 를 활용해서 개발 환경을 맞추고 배포 관리도 편하게 할 수 있다!</p>
+
+<h4 id="기존-서버-구축">기존 서버 구축</h4>
+
+<p>기존에 서버를 구축하려면 ubuntu 인스턴스 생성 / 웹 서버 설정 / db 설정 / 소스 복사 등 일일이 손으로 하나하나 설정해야한다. 도커를 사용하면 호스트 OS 와 서비스 운영 환경을 분리시켜 이런 번거로움을 해결해준다.</p>
+
+<h4 id="가상화">가상화</h4>
+
+<p>도커는 가상화를 통해 하드웨어의 물리적 리소스를 최대한 활용한다.</p>
+
+<p><img src="https://www.redhat.com/cms/managed-files/server-usage-500x131.png" alt="visualization" /></p>
+
+<p>기존에는 1개의 서버에 30%의 서버를 사용하더라도 여러개의 서버를 하나의 서버에 처리하기 어려워, 비효율적이라는 단점이 있었다. 하지만 도커는 가상화를 통해 1개의 서버를 2개의 고유한 서버로 분할 해 각각의 독립적인 태스크를 처리하여, 효율적으로 서버를 사용할 수 있다.</p>
+
+<p><img src="https://www.redhat.com/cms/managed-files/server-usage-for-virtualization-500x131.png" alt="virtualization" /></p>
+
+<p>이렇게 하면 빈 서버를 사용해 다른 태스크를 처리하거나 / 비용을 절감할 수 있다. 가상화에는 호스트형 가상화 / 하이퍼바이저 형 가상화 / 컨테이너 가상화가 있다.</p>
+
+<p><strong>호스트형 가상화</strong></p>
+
+<p>호스트 형 가상화는 하드웨어 위에 <code class="highlighter-rouge">HOST OS</code> 를 설치하고 가상화 소프트웨어를 이용해 OS 를 작동하는 방식. 가상 환경을 쉽게 구축할 수 있지만,OS 상에서 또다른 OS 가 돌아가므로 자원이 많이 소비되고 느리다.</p>
+
+<h5 id="하이퍼바이저형-가상화"><strong>하이퍼바이저형 가상화</strong></h5>
+
+<p><strong>VM</strong> 의 경우 <code class="highlighter-rouge">hypervisor</code> 라는 소프트웨어를 통해 물리 리소스를 분리하는 것. 해당 소프트웨어가 하드웨어와 가상 환경을 제어하는데, <code class="highlighter-rouge">host os</code> 를 사용하지 않지만, 각각의  VM 에서 guest os 가 돌아가기 때문에 가상환경이 시작할 때 걸리는 오버 헤드가 커진다.</p>
+
+<p><strong>container 가상화</strong></p>
+
+<p><strong>VM</strong> 의 단점인 오버헤드를 최소화 하기 위한 방법으로, HOST OS 상에 독립적인 공간을 만들어, 별도의 서버인 것 처럼 사용한다. 각 어플리케이션이 HOST OS 를 공유하기 때문에 오버헤드가 작아진다.</p>
+
+<p><img src="https://miro.medium.com/max/1400/1*wOBkzBpi1Hl9Nr__Jszplg.png" alt="vm vs docker" /></p>
+
+<p>VM 의 경우 hypervisor 위에 여러 guest os 가 올라가기 때문에 볼륨이 도커보다 크다. 하지만 도커는 host os 를 공유하기 때문에 해당 볼륨이 작을 뿐더러, docker 의 라이프 사이클은 docker hub 에서 image 를 pull 받으면서 시작하기 때문에, 용량이 훨신 작아 네트워크를 덜 쓰기 때문에 비용도 줄어든다.</p>
+
+<h5 id="컨테이너">컨테이너</h5>
+
+<p>다양한 프로그램 / 실행환경을 컨테이너에 묶어 동일한 인터페이스 제공하여 
+프로그램의 배포 / 관리를 쉽게 해줄 수 있는 도구</p>
+
+<h5 id="도커-이미지">도커 이미지</h5>
+
+<p>도커 이미지란 컨테이너를 생성하기 위해 필요한 설계도. 컨테이너를 생성하기 위한 파일. 
+해당 파일은 docker hub 에 저장됨. 이미지는 클래스, 컨테이너는 객체 개념인 것 같다.</p>
+
+<h2 id="getting-started">Getting started</h2>
+
+<p>도커 설치 (mac osx)</p>
+
+<p><a href="https://docs.docker.com/docker-for-mac/install/">https://docs.docker.com/docker-for-mac/install/</a></p>
+
+<h5 id="terminal">terminal</h5>
+
+<p>도커가 잘 설치되어있는지 테스트 해보기</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>docker <span class="nt">--version</span>
+<span class="c"># Docker version 18.09.2, build 6247962</span>
+</code></pre></div></div>
+
+<h5 id="도커-이미지-만들기">도커 이미지 만들기</h5>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>docker run hello-world
+<span class="c">#Unable to find image 'hello-world:latest' locally</span>
+<span class="c">#latest: Pulling from library/hello-world</span>
+<span class="c">#1b930d010525: Pull complete </span>
+<span class="c">#Digest: sha256:6540fc08ee6e6b7b63468dc3317e3303aae178cb8a45ed3123180328bcc1d20f</span>
+<span class="c">#Status: Downloaded newer image for hello-world:latest</span>
+
+<span class="c">#Hello from Docker!</span>
+<span class="c">#This message shows that your installation appears to be working correctly.</span>
+
+</code></pre></div></div>
+
+<h5 id="이미지-다운로드">이미지 다운로드</h5>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>docker pull ubuntu
+<span class="nv">$ </span><span class="nb">cat</span> /etc/issue <span class="c"># 우분투 버전 확인</span>
+</code></pre></div></div>
+
+<p>내 레포에 없으면 공식적인 문서를 가져온다. run 을 했을 경우 없으면 pull 후 실행.</p>
+
+<h5 id="도커-실행-컨테이너-확인">도커 실행 컨테이너 확인</h5>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>docker ps
+</code></pre></div></div>
+
+<h5 id="도커-이미지-리스트">도커 이미지 리스트</h5>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>docker image <span class="nb">ls</span>
+</code></pre></div></div>
+
+<h5 id="도커-컨테이너-생성">도커 컨테이너 생성</h5>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>docker run <span class="nt">-i</span> <span class="nt">-t</span> <span class="nt">--name</span> ubuntu-ruby ubuntu:16.04 /bin/bash
+</code></pre></div></div>
+
+<h5 id="도커-컨테이너-종료">도커 컨테이너 종료</h5>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>docker <span class="nb">kill</span> <span class="o">[</span>이름] /bin/bash 
+</code></pre></div></div>
+
+<h5 id="도커-이미지--컨테이너-강제-삭제">도커 이미지 / 컨테이너 강제 삭제</h5>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>docker rmi <span class="nt">-f</span>
+</code></pre></div></div>
+
+<h5 id="컨테이너-재부팅">컨테이너 재부팅</h5>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>docker restart <span class="o">[</span>container_id]
+</code></pre></div></div>
+
+<h5 id="컨테이너-접속하기">컨테이너 접속하기</h5>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>docker start <span class="o">[</span>name]
+<span class="nv">$ </span>docker attach <span class="o">[</span>container_id]
+</code></pre></div></div>
+
+<h5 id="컨테이너-삭제">컨테이너 삭제</h5>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># 현재 실행중인 모든 컨테이너 강제 종료</span>
+<span class="nv">$ </span>docker <span class="nb">kill</span> <span class="si">$(</span>docker ps <span class="nt">-q</span> <span class="nt">-f</span> <span class="nv">status</span><span class="o">=</span>running<span class="si">)</span>   
+<span class="c"># 현재 실행중인 모든 컨테이너 종료</span>
+<span class="nv">$ </span>docker stop <span class="si">$(</span>docker ps <span class="nt">-q</span> <span class="nt">-f</span> <span class="nv">status</span><span class="o">=</span>running<span class="si">)</span>   
+<span class="c"># 종료된 모든 컨테이너 삭제</span>
+<span class="nv">$ </span>docker <span class="nb">rm</span> <span class="si">$(</span>docker ps <span class="nt">-q</span> <span class="nt">-f</span> <span class="nv">status</span><span class="o">=</span>exited<span class="si">)</span>      
+</code></pre></div></div>
+
+<h2 id="dockerfile">Dockerfile</h2>
+
+<p>도커에 여러 설치할 내용들을 넣고 한번에 컨테이너를 만들 수 있다. 여러 설정 컨피그를 더하기 위해 이미지 빌드용 DSL(Domain Specific Language) 파일을 사용한다</p>
+
+<h4 id="도커파일-만들기">도커파일 만들기</h4>
+
+<ul>
+  <li><strong>Dockerfile</strong> 이름으로 만들면 된다.</li>
+</ul>
+
+<h5 id="sample">sample</h5>
+
+<p>아래 샘플은 django 환경 관련 구성 설정이 들어있는 도커 파일이다</p>
+
+<div class="language-dockerfile highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">FROM</span><span class="s"> python:3.7</span>
+
+<span class="c">##########################################################</span>
+<span class="c"># set timezone</span>
+<span class="c">##########################################################</span>
+<span class="k">ENV</span><span class="s"> TZ="/usr/share/zoneinfo/Asia/Seoul"</span>
+<span class="k">ENV</span><span class="s"> PYTHONUNBUFFERED 0</span>
+
+<span class="k">RUN </span>apt-get update <span class="o">&amp;&amp;</span> apt-get <span class="nt">-y</span> <span class="nb">install </span>libpq-dev
+<span class="k">RUN </span>apt-get <span class="nt">-y</span> <span class="nb">install </span>postgresql-client
+
+<span class="k">ARG</span><span class="s"> PROJECT_DIR="/app"</span>
+<span class="c">##########################################################</span>
+<span class="c"># install dependencies via pip</span>
+<span class="c">##########################################################</span>
+<span class="k">COPY</span><span class="s"> requirements.txt requirements.txt</span>
+<span class="k">RUN </span>pip <span class="nb">install</span> <span class="nt">--upgrade</span> pip <span class="o">&amp;&amp;</span> pip <span class="nb">install</span> <span class="nt">-r</span> requirements.txt
+
+<span class="c">##########################################################</span>
+<span class="c"># set working directory</span>
+<span class="c">##########################################################</span>
+<span class="k">WORKDIR</span><span class="s"> ${PROJECT_DIR}</span>
+
+<span class="c">##########################################################</span>
+<span class="c"># add proejct files</span>
+<span class="c">##########################################################</span>
+<span class="k">COPY</span><span class="s"> . $PROJECT_DIR</span>
+
+<span class="c">##########################################################</span>
+<span class="c"># expose port for single container(Elastic Beanstalk)</span>
+<span class="c">##########################################################</span>
+<span class="k">EXPOSE</span><span class="s"> 8000</span>
+
+<span class="c">##########################################################</span>
+<span class="c"># command</span>
+<span class="c">##########################################################</span>
+<span class="k">CMD</span><span class="s"> ["sh", "./entry_point.sh"]</span>
+
+</code></pre></div></div>
+
+<p>django 환경 내에 dockerfile 을 만들면 <code class="highlighter-rouge">COPY . $PROJECT_DIR</code> 를 통해 도커 컨테이너에 장고 프로젝트를 옮겨준다. <code class="highlighter-rouge">CMD</code> 는 도커 내에서 실행하는 명령어인데, 할 명령이 많아 쉘파일을 만들어서 작성해주었다.</p>
+
+<h4 id="도커파일-실행">도커파일 실행</h4>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ docker build -t [name] .
+</code></pre></div></div>
+
+<p>도커파일 이름을 찾아 해당 파일 구성으로 이루어진 도커 이미지를 생성한다.</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ docker images
+</code></pre></div></div>
+
+<h5 id="sample-1">sample</h5>
+
+<p>django 에서 제공하는 샘플 파일</p>
+
+<div class="language-dockerfile highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># version: docker-compose version </span>
+version: "3.7"
+# service: 실행할 여러 컨테이너들을 넣는다.
+services:
+  # redis container
+  redis:
+    image: redis:alpine
+    ports:
+      - "6379"
+    networks:
+      - frontend
+    deploy:
+      replicas: 2
+      update_config:
+        parallelism: 2
+        delay: 10s
+      restart_policy:
+        condition: on-failure
+  <span class="c"># database container</span>
+  db:
+    image: postgres:9.4
+    volumes:
+      - db-data:/var/lib/postgresql/data
+    networks:
+      - backend
+    deploy:
+      placement:
+        constraints: [node.role == manager]
+
+  vote:
+    image: dockersamples/examplevotingapp_vote:before
+    ports:
+      - "5000:80"
+    networks:
+      - frontend
+    depends_on:
+      - redis
+    deploy:
+      replicas: 2
+      update_config:
+        parallelism: 2
+      restart_policy:
+        condition: on-failure
+
+  result:
+    image: dockersamples/examplevotingapp_result:before
+    ports:
+      - "5001:80"
+    networks:
+      - backend
+    depends_on:
+      - db
+    deploy:
+      replicas: 1
+      update_config:
+        parallelism: 2
+        delay: 10s
+      restart_policy:
+        condition: on-failure
+
+  worker:
+    image: dockersamples/examplevotingapp_worker
+    networks:
+      - frontend
+      - backend
+    deploy:
+      mode: replicated
+      replicas: 1
+      labels: [APP=VOTING]
+      restart_policy:
+        condition: on-failure
+        delay: 10s
+        max_attempts: 3
+        window: 120s
+      placement:
+        constraints: [node.role == manager]
+
+  visualizer:
+    image: dockersamples/visualizer:stable
+    ports:
+      - "8080:8080"
+    stop_grace_period: 1m30s
+    volumes:
+      - "/var/run/docker.sock:/var/run/docker.sock"
+    deploy:
+      placement:
+        constraints: [node.role == manager]
+
+networks:
+  frontend:
+  backend:
+
+volumes:
+  db-data:
+</code></pre></div></div>
+
+<p>도커 컴포즈 시작</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ docker-compose up
+</code></pre></div></div>
+
+<p>도커 컴포즈 종료</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ docker-compose down 
+</code></pre></div></div>
+
+<h5 id="참고자료">참고자료</h5>
+
+<ul>
+  <li><a href="https://www.redhat.com/ko/topics/virtualization/what-is-virtualization">https://www.redhat.com/ko/topics/virtualization/what-is-virtualization</a></li>
+</ul>
+:ET
