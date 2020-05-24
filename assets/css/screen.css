@@ -313,7 +313,7 @@ for small screen(<720px):
 
 #wrapper {
     padding-bottom: 100px;
-    background-color: #f4f4f4;
+    background-color: #fbfbfb;
     overflow-x: scroll; /* @@iolo for very long title/tags */
 }
 
@@ -1301,7 +1301,7 @@ body.page-template {
 
     #menu > li.active, #menu > li:hover {
         border-bottom: none;
-        background-color: #f4f4f4;
+        background-color: #fbfbfb;
     }
 
     #menu > li > a {
